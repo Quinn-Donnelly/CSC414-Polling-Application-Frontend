@@ -20,4 +20,9 @@ router.get('/', (req, res) => {
   res.json({ message: 'Welcome to the poller API. Please read the docs before use' });
 });
 
+/**
+ *  API Endpoints are defined here
+ */
+router.use('/user', require('./user'));
+
 module.exports = router;
