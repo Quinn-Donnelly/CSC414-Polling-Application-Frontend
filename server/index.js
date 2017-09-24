@@ -2,6 +2,7 @@
 
 const express = require('express');
 const logger = require('./logger');
+const api = require('./api');
 
 const argv = require('minimist')(process.argv.slice(2));
 const setup = require('./middlewares/frontendMiddleware');
@@ -11,7 +12,7 @@ const resolve = require('path').resolve;
 const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
-// app.use('/api', myApi);
+app.use('/api', api);
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
