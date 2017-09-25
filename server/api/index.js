@@ -1,16 +1,25 @@
 const express = require('express');
+const morgan = require('morgan');
 const logger = require('../logger');
+const cookieParser = require('cookie-parser');
 
 const router = express.Router();
 
+// Enable the cookie parser for auth
+router.use(cookieParser());
+
 /**
  *  This is the middleware for the api it will be used to do authentication
- *  and logging of requests
  */
 router.use((req, res, next) => {
-  logger.log('API call coming');
+  logger.log(`Cookies: ${req.cookies.login}`);
   next();
 });
+
+/**
+ * Logger to log the API calls coming into the server
+ */
+router.use(morgan('combined'));
 
 /**
  * Home route returns the welcome message
