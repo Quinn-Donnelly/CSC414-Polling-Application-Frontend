@@ -26,38 +26,65 @@ const MILI_SECONDS_IN_HOUR = 3600000;
  * @param  {string} name The string to be standardized
  * @return {string}      The standardized name
  */
-function standardizeName(name) {
-  let username = name.replace(/[^a-zA-Z 0-9]/g, '');
+function standardizeEmail(name) {
+  let username = name.replace(/[^a-zA-Z 0-9@.]/g, '');
   username = username.trim();
   username = username.toUpperCase();
 
   return username;
 }
 
+/**
+ * Given a string this will remove specail chars (only allowed letters(cap and lower),
+ * spaces, digits, dash, and underscore ) and trim white space. Will ensure that
+ * each word is uppercase
+ * @param  {string} name The string to be standardized
+ * @return {string}      The standardized name
+ */
+function standardizeName(name) {
+  let username = name.replace(/[^a-zA-Z 0-9_-]/g, '');
+  username = username.trim();
+  const words = username.split(' ');
+  let standardName = '';
+  for (let i = 0; i < words.length; i += 1) {
+    standardName += `${words[i][0].toUpperCase() + words[i].slice(1)} `;
+  }
+
+  return standardName;
+}
+
 // '/' Route
+/**
+ * This will log the given user in
+ * @param {string} email User name for the user logging in
+ * @param {string} pwd The password for the user attempting login
+ * @return {response} If succsess (200) a json will return with the msg "Logged In" and a login cookie
+ * The cookie will hold the ID for the user and a token for security login
+ * Otherwise an apropriate status code with a err key in the json holding an error message
+ */
 router.get('/', co.wrap(function* login(req, res) {
   const collection = db.collection(COLLECTION_NAME);
 
   // Check params
-  if (typeof (req.query.name) !== 'string') {
-    res.status(400).json({ message: 'name is required and must be a string' });
+  if (typeof (req.query.email) !== 'string') {
+    res.status(400).json({ err: 'email is required and must be a string' });
     return;
   }
 
   // TODO: the password is being sent in plain text need to encrypt
   if (typeof (req.query.pwd) !== 'string') {
-    res.status(400).json({ message: 'pwd is required and must be a string' });
+    res.status(400).json({ err: 'pwd is required and must be a string' });
     return;
   }
 
   // Sanatize the user name and conform it to the data model
-  const username = standardizeName(req.query.name);
+  const email = standardizeEmail(req.query.email);
 
   // User from the database with matching name
   let user = null;
 
   try {
-    user = yield collection.findOne({ name: username });
+    user = yield collection.findOne({ email });
   } catch (err) {
     logger.error(`Unable to check for user in ${ENDPOINT} get`);
     res.sendStatus(500);
@@ -68,45 +95,46 @@ router.get('/', co.wrap(function* login(req, res) {
   const correct = yield bcrypt.compare(req.query.pwd, user.pwd);
 
   if (correct) {
-    res.cookie(LOGIN_COOKIE_NAME, user.shortId, { maxAge: COOKIE_LIFETIME_IN_HOURS * MILI_SECONDS_IN_HOUR }).json({ message: 'Logged In' });
+    res.status(200).cookie(LOGIN_COOKIE_NAME, user.shortId, { maxAge: COOKIE_LIFETIME_IN_HOURS * MILI_SECONDS_IN_HOUR }).json({ message: 'Logged In' });
     return;
   }
 
-  res.status(401).json({ message: 'Incorrect username password combination' });
+  res.status(401).json({ err: 'Incorrect username password combination' });
 }));
 
-
+/**
+ * This will add a new user to the database
+ * @param {string} name The display name for the user
+ * @param {string} email The login name for the user will be the email (Must be unique)
+ * @param {string} pwd The password for the new user
+ * @param
+ */
 router.post('/', co.wrap(function* addUser(req, res) {
   const collection = db.collection(COLLECTION_NAME);
 
   // Check params
   if (typeof (req.body.name) !== 'string') {
-    res.status(400).json({ message: 'name is required and must be a string' });
+    res.status(400).json({ err: 'name is required and must be a string' });
     return;
   }
+
+  if (typeof (req.body.email) !== 'string') {
+    res.status(400).json({ err: 'email is required and must be a string' });
+    return;
+  }
+
   // Remove leading and trailing spaces from the name
   // Conform and sanitize the user name
-  const username = standardizeName(req.body.name);
+  const email = standardizeEmail(req.body.email);
+  const displayName = standardizeName(req.body.name);
 
-  if (username === '') {
-    res.status(400).json({ message: 'Bad username. Must be at least length one without speacil charecters' });
+  if (displayName === '') {
+    res.status(400).json({ err: 'Bad username. Must be at least length one without speacil charecters' });
     return;
   }
 
   if (typeof (req.body.pwd) !== 'string' || req.body.pwd === '') {
-    res.status(400).json({ message: 'pwd is required and must be a string' });
-    return;
-  }
-
-  // Make role name consistant
-  if (typeof (req.body.role) !== 'string') {
-    res.status(400).json({ message: 'role is required and must be a string' });
-    return;
-  }
-
-  const role = req.body.role.toUpperCase();
-  if (!(role === 'STUDENT' || role === 'TEACHER')) {
-    res.status(400).json({ message: 'Invalid role' });
+    res.status(400).json({ err: 'pwd is required and must be a string' });
     return;
   }
 
@@ -114,7 +142,7 @@ router.post('/', co.wrap(function* addUser(req, res) {
   let user = null;
 
   try {
-    user = yield collection.findOne({ name: username });
+    user = yield collection.findOne({ email });
   } catch (err) {
     logger.error(`Unable to check for user in ${ENDPOINT} post`);
     res.sendStatus(500);
@@ -123,7 +151,7 @@ router.post('/', co.wrap(function* addUser(req, res) {
 
   // If the username is taken respond with conflict
   if (user !== null) {
-    res.status(409).json({ message: `user ${username} already exists` });
+    res.status(409).json({ err: `user ${email} already exists` });
     return;
   }
 
@@ -136,7 +164,7 @@ router.post('/', co.wrap(function* addUser(req, res) {
   // Preform the insert to add the user and users data to the database
   let result = null;
   try {
-    result = yield collection.insertOne({ shortId, name: username, pwd: hash, role });
+    result = yield collection.insertOne({ shortId, email, displayName, pwd: hash });
   } catch (err) {
     logger.error(`Unable to add user at ${ENDPOINT} post: ${err}`);
     res.sendStatus(500);
