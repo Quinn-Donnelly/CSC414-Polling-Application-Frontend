@@ -1,6 +1,5 @@
 const express = require('express');
 const morgan = require('morgan');
-const logger = require('../logger');
 const cookieParser = require('cookie-parser');
 
 const router = express.Router();
@@ -12,7 +11,6 @@ router.use(cookieParser());
  *  This is the middleware for the api it will be used to do authentication
  */
 router.use((req, res, next) => {
-  logger.log(`Cookies: ${req.cookies.login}`);
   next();
 });
 
@@ -33,5 +31,6 @@ router.get('/', (req, res) => {
  *  API Endpoints are defined here
  */
 router.use('/user', require('./user'));
+router.use('/test', require('./test'));
 
 module.exports = router;

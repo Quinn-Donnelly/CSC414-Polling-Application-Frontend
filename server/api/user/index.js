@@ -1,6 +1,8 @@
 const express = require('express');
+const crypto = require('crypto');
 const co = require('co');
 const bcrypt = require('bcrypt');
+const uuidv4 = require('uuid/v4');
 const shortid = require('shortid');
 const logger = require('../../logger');
 const router = express.Router();
@@ -20,6 +22,8 @@ const SALT_ROUNDS = 10;
 const LOGIN_COOKIE_NAME = 'login';
 const COOKIE_LIFETIME_IN_HOURS = 1;
 const MILI_SECONDS_IN_HOUR = 3600000;
+const APP_SECRET = 'THIS IS SO SECRUE';
+const ALG = 'aes192';
 
 /**
  * Given a string this will remove specail chars and trim white space and to upper it
@@ -86,7 +90,7 @@ router.get('/', co.wrap(function* login(req, res) {
   try {
     user = yield collection.findOne({ email });
   } catch (err) {
-    logger.error(`Unable to check for user in ${ENDPOINT} get`);
+    logger.error(`Unable to check for user in ${ENDPOINT} get: ${err}`);
     res.sendStatus(500);
     return;
   }
@@ -95,7 +99,25 @@ router.get('/', co.wrap(function* login(req, res) {
   const correct = yield bcrypt.compare(req.query.pwd, user.pwd);
 
   if (correct) {
-    res.status(200).cookie(LOGIN_COOKIE_NAME, user.shortId, { maxAge: COOKIE_LIFETIME_IN_HOURS * MILI_SECONDS_IN_HOUR }).json({ message: 'Logged In' });
+    const cipher = crypto.createCipher(ALG, APP_SECRET);
+    const userUUID = uuidv4();
+    let token = cipher.update(userUUID, 'utf8', 'hex');
+    token += cipher.final('hex');
+
+    let result = null;
+    try {
+      // Add the UUID to database for validating the cookie
+      result = yield collection.update({ email }, { $set: { token: userUUID } });
+      if (result.result.nModified !== 1) {
+        throw new Error('No change to document on update');
+      }
+    } catch (err) {
+      logger.error(`Unable to add token for user in ${ENDPOINT} get: ${err}`);
+      res.status(500);
+      return;
+    }
+
+    res.status(200).cookie(LOGIN_COOKIE_NAME, { id: user.shortId, token }, { maxAge: COOKIE_LIFETIME_IN_HOURS * MILI_SECONDS_IN_HOUR }).json({ message: 'Logged In' });
     return;
   }
 
