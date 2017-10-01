@@ -126,4 +126,46 @@ router.post('/', co.wrap(function* addClassroom(req, res) {
   res.status(201).json({ message: 'New classroom added', id: shortId });
 }));
 
+
+router.delete('/:classroomId', co.wrap(function* deleteClass(req, res) {
+  if (!req.params.classroomId || typeof (req.params.classroomId) !== 'string') {
+    res.status(400).json({ err: 'classroom id must be given in the route' });
+    return;
+  }
+
+  const collection = db.collection(COLLECTION_NAME);
+  let classroom = null;
+  try {
+    classroom = yield collection.findOne({ shortId: req.params.classroomId });
+  } catch (err) {
+    logger.error(`Unable to query classroom at ${ENDPOINT} delete: ${err}`);
+    res.sendStatus(500);
+    return;
+  }
+
+  let user = null;
+  try {
+    user = yield getUser(req.cookies.login.id);
+  } catch (err) {
+    logger.error(`Unable to query user at ${ENDPOINT} delete: ${err}`);
+    res.sendStatus(500);
+    return;
+  }
+
+  if (!user._id.equals(classroom.teacher.valueOf())) {
+    res.status(403).json({ err: 'Not authorized to remove this classroom' });
+    return;
+  }
+
+  const result = yield collection.deleteOne({ shortId: req.params.classroomId });
+
+  if (!result.result.ok || result.deletedCount !== 1) {
+    logger.error(`Delete failed for classroom at ${ENDPOINT} delete`);
+    res.sendStatus(500);
+    return;
+  }
+
+  res.status(200).json({ message: 'Classroom removed' });
+}));
+
 module.exports = router;

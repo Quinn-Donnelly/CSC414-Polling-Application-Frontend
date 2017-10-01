@@ -7,7 +7,7 @@ const shortid = require('shortid');
 const logger = require('../../logger');
 const router = express.Router();
 const standardizeEmail = require('../util').standardizeEmail;
-const standardizeName = require('util').standardizeName;
+const standardizeName = require('../util').standardizeName;
 const getDB = require('../database');
 let db = getDB((err, database) => {
   if (err) {
