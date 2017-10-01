@@ -27,9 +27,23 @@ const SALT_ROUNDS = require('../constants').SALT_ROUNDS;
 
 router.use(co.wrap(auth));
 
-router.get('/', (req, res) => {
-  res.json({ message: 'Hit me baby classroom time' });
-});
+/**
+ * Returns all active classrooms with their displayNames and shortIds along with
+ * if they are secure
+ */
+// TODO: Need to limit the number of classrooms that are sent to client
+router.get('/', co.wrap(function* getClassrooms(req, res) {
+  const collection = db.collection(COLLECTION_NAME);
+
+  let docs = null;
+  try {
+    docs = yield collection.find({ active: true }, { shortId: 1, displayName: 1, 'secure.is': 1, _id: 0 }).toArray();
+  } catch (err) {
+    logger.error(`Unable to query classroom at ${ENDPOINT} get: ${err}`);
+    res.sendStatus(500);
+  }
+  res.status(200).json(docs);
+}));
 
 /**
  * Creates a classroom for the user, the user is the teacher
