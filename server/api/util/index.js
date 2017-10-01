@@ -47,6 +47,23 @@ function standardizeName(name) {
   return standardName;
 }
 
+/**
+ * Gets a user from the database
+ * @param  {string}    shortId The shortId of the user to return
+ * @return {Generator}         The user object
+ */
+function* getUser(shortId) {
+  const collection = db.collection(USER_COLLECTION);
+  let user = null;
+
+  try {
+    user = yield collection.findOne({ shortId });
+  } catch (err) {
+    return new Error(err);
+  }
+  return user;
+}
+
 
 function* auth(req, res, next) {
   let loginCookie = null;
@@ -85,4 +102,4 @@ function* auth(req, res, next) {
   res.sendStatus(401);
 }
 
-module.exports = { auth, standardizeEmail, standardizeName };
+module.exports = { auth, standardizeEmail, standardizeName, getUser };

@@ -31,6 +31,7 @@ router.get('/', (req, res) => {
  *  API Endpoints are defined here
  */
 router.use('/user', require('./user'));
+router.use('/classroom', require('./classroom'));
 router.use('/test', require('./test'));
 
 module.exports = router;
