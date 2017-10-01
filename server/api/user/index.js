@@ -6,6 +6,8 @@ const uuidv4 = require('uuid/v4');
 const shortid = require('shortid');
 const logger = require('../../logger');
 const router = express.Router();
+const standardizeEmail = require('../util').standardizeEmail;
+const standardizeName = require('util').standardizeName;
 const getDB = require('../database');
 let db = getDB((err, database) => {
   if (err) {
@@ -24,38 +26,6 @@ const COOKIE_LIFETIME_IN_HOURS = 1;
 const MILI_SECONDS_IN_HOUR = 3600000;
 const APP_SECRET = 'THIS IS SO SECRUE';
 const ALG = 'aes192';
-
-/**
- * Given a string this will remove specail chars and trim white space and to upper it
- * @param  {string} name The string to be standardized
- * @return {string}      The standardized name
- */
-function standardizeEmail(name) {
-  let username = name.replace(/[^a-zA-Z 0-9@.]/g, '');
-  username = username.trim();
-  username = username.toUpperCase();
-
-  return username;
-}
-
-/**
- * Given a string this will remove specail chars (only allowed letters(cap and lower),
- * spaces, digits, dash, and underscore ) and trim white space. Will ensure that
- * each word is uppercase
- * @param  {string} name The string to be standardized
- * @return {string}      The standardized name
- */
-function standardizeName(name) {
-  let username = name.replace(/[^a-zA-Z 0-9_-]/g, '');
-  username = username.trim();
-  const words = username.split(' ');
-  let standardName = '';
-  for (let i = 0; i < words.length; i += 1) {
-    standardName += `${words[i][0].toUpperCase() + words[i].slice(1)} `;
-  }
-
-  return standardName;
-}
 
 // '/' Route
 /**
