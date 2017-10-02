@@ -27,9 +27,12 @@ const SALT_ROUNDS = require('../constants').SALT_ROUNDS;
 
 router.use(co.wrap(auth));
 
+// Sub routes to the endpoint
+router.use('/:classroomId/student', co.wrap(require('./student').addStudent));
+
 /**
  * Returns all active classrooms with their displayNames and shortIds along with
- * if they are secure
+ * if they are private
  */
 // TODO: Need to limit the number of classrooms that are sent to client
 router.get('/', co.wrap(function* getClassrooms(req, res) {
@@ -37,7 +40,7 @@ router.get('/', co.wrap(function* getClassrooms(req, res) {
 
   let docs = null;
   try {
-    docs = yield collection.find({ active: true }, { shortId: 1, displayName: 1, 'secure.is': 1, _id: 0 }).toArray();
+    docs = yield collection.find({ active: true }, { shortId: 1, displayName: 1, 'private.is': 1, _id: 0 }).toArray();
   } catch (err) {
     logger.error(`Unable to query classroom at ${ENDPOINT} get: ${err}`);
     res.sendStatus(500);
@@ -107,7 +110,7 @@ router.post('/', co.wrap(function* addClassroom(req, res) {
       students: [],
       questions: classroomUUID,
       active: true,
-      secure: {
+      private: {
         is: secure,
         pwd: hash,
       },
