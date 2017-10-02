@@ -52,6 +52,7 @@ router.get('/', co.wrap(function* getClassrooms(req, res) {
  * the password for joining the classroom
  * @param {string} [pwd] The password for a private class
  */
+// TODO: Trim the name
 router.post('/', co.wrap(function* addClassroom(req, res) {
   // Check params
   if (typeof (req.body.name) !== 'string') {
@@ -62,7 +63,7 @@ router.post('/', co.wrap(function* addClassroom(req, res) {
 
   let secure = false;
   try {
-    secure = parseInt(req.body.secure, 10);
+    secure = parseInt(req.body.private, 10);
   } catch (err) {
     res.status(400).json({ err: 'secure is required and must be a number' });
     return;
@@ -137,6 +138,10 @@ router.delete('/:classroomId', co.wrap(function* deleteClass(req, res) {
   let classroom = null;
   try {
     classroom = yield collection.findOne({ shortId: req.params.classroomId });
+    if (classroom === null) {
+      res.status(404).json({ err: 'Classroom not found' });
+      return;
+    }
   } catch (err) {
     logger.error(`Unable to query classroom at ${ENDPOINT} delete: ${err}`);
     res.sendStatus(500);
@@ -154,6 +159,17 @@ router.delete('/:classroomId', co.wrap(function* deleteClass(req, res) {
 
   if (!user._id.equals(classroom.teacher.valueOf())) {
     res.status(403).json({ err: 'Not authorized to remove this classroom' });
+    return;
+  }
+
+  try {
+    const collectionsInDbforQuestions = yield db.listCollections({ name: classroom.questions }).toArray();
+    if (collectionsInDbforQuestions.length === 1) {
+      db.dropCollection(classroom.questions);
+    }
+  } catch (err) {
+    logger.error(`Failed to connect to questions at ${ENDPOINT} delete: ${err}`);
+    res.sendStatus(500);
     return;
   }
 
