@@ -21,8 +21,8 @@ let db = getDB((err, database) => {
 
 const router = express.Router();
 
+const ENDPOINT = require('./constants').ENDPOINT;
 const COLLECTION_NAME = 'classroom';
-const ENDPOINT = '/classroom';
 const SALT_ROUNDS = require('../constants').SALT_ROUNDS;
 
 router.use(co.wrap(auth));
