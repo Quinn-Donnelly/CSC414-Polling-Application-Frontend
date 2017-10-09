@@ -1,11 +1,44 @@
-// import { take, call, put, select } from 'redux-saga/effects';
+import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
+import { LOCATION_CHANGE } from 'react-router-redux';
+import request from 'utils/request';
+import { API_URL } from '../App/constants';
+import {
+  LOG_IN,
+} from './constants';
+import { loggedIn } from './actions';
+
+export function* login(action) {
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: action.email,
+      password: action.pwd,
+    }),
+  };
+
+  const requestURL = `${API_URL}/clients/login`;
+
+  try {
+    // Call our request helper (see 'utils/request')
+    const loginInfo = yield call(request, requestURL, options);
+    yield put(loggedIn(loginInfo));
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 // Individual exports for testing
-export function* defaultSaga() {
-  // See example in containers/HomePage/sagas.js
+export function* watcher() {
+  const loginWatcher = yield takeLatest(LOG_IN, login);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(loginWatcher);
 }
 
 // All sagas to be loaded
 export default [
-  defaultSaga,
+  watcher,
 ];
