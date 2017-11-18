@@ -67,8 +67,8 @@ export class Login extends React.Component { // eslint-disable-line react/prefer
             id="pwd"
           /><br />
 
-          <RaisedButton label="Sign In" style={style} type="submit" />
-          <RaisedButton label="Sign UP" style={style} onClick={() => this.props.dispatch(push('/signup'))} />
+          <RaisedButton label="Sign In" style={style} primary type="submit" />
+          <RaisedButton label="Sign UP" style={style} secondary onClick={() => this.props.dispatch(push('/signup'))} />
         </form>
 
       </div>
