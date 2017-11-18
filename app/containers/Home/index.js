@@ -55,7 +55,7 @@ const Title1 = styled.div`
   margin: auto;
   width: 50%;
   `;
-const Title3 = styled.div`
+const Title3 = styled.h1`
 color: #FFFFFF
   `;
 
