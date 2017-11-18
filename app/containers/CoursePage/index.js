@@ -6,11 +6,15 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { goBack } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import { TextField } from 'material-ui';
 import { List, ListItem } from 'material-ui/List';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
 import ContentSend from 'material-ui/svg-icons/content/send';
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -85,7 +89,10 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
   render() {
     return (
       <div>
-        <h2 style={styles.headline}>{this.state.currentCourse.name}</h2>
+        <AppBar
+          title={this.state.currentCourse.name}
+          iconElementLeft={<IconButton onClick={() => this.props.dispatch(goBack())}><ArrowBack /></IconButton>}
+        />
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}
@@ -203,7 +210,7 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
 }
 
 CoursePage.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
   Classes: PropTypes.any,
   params: PropTypes.object.isRequired,
 };
