@@ -28,7 +28,7 @@ const style = {
 const Title = styled.h1`
 
   margin:0px;
-  padding:0px;
+  padding:200px 0px 0px 0px;
   background: -webkit-linear-gradient(left, #25c481, #25b7c4);
  background: linear-gradient(to right,#ff0055, #2cc7c4);
 font-weight:300;
@@ -38,6 +38,7 @@ font-weight:300;
 
 const Title2 = styled.h2`
 position: relative;
+ margin-top:  30;
 z-index: 1;
 background: #FFFFFF;
 max-width: 800px;

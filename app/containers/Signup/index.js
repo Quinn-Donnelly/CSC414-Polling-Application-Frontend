@@ -27,7 +27,7 @@
  const Title = styled.h1`
 
    margin:0px;
-   padding:0px;
+   padding:200px 0px 0px 0px;
    background: -webkit-linear-gradient(left, #25c481, #25b7c4);
   background: linear-gradient(to right, #ff0055, #2cc7c4);
  font-weight:300;
@@ -37,21 +37,26 @@
 
  const Title2 = styled.h2`
    position: relative;
+
  z-index: 1;
  background: #FFFFFF;
  max-width: 800px;
+ margin-top:  30;
  margin: 0 auto 100px;
- padding: 4px;
+ padding: 6%;
+
+
  text-align: center;
  `;
  const Title3 = styled.h3`
  font-family: "Roboto", sans-serif;
-  outline: 0;
+  outline: ;
+
   background: #f2f2f2;
   width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
+  border: ;
+  margin: 0 auto 40px;
+  padding: 5px;
   box-sizing: border-box;
   font-size: 14px;
   `;

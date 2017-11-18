@@ -23,7 +23,7 @@ const style = {
 
 const styles = {
   headline: {
-    fontSize:35,
+    fontSize: 35,
     marginTop: -30,
     marginBottom: 12,
     fontWeight: 40,
