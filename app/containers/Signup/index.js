@@ -35,7 +35,7 @@
 
    `;
 
- const Title2 = styled.h2`
+ const Title2 = styled.div`
    position: relative;
 
  z-index: 1;
@@ -48,7 +48,7 @@
 
  text-align: center;
  `;
- const Title3 = styled.h3`
+ const Title3 = styled.div`
  font-family: "Roboto", sans-serif;
   outline: ;
 
