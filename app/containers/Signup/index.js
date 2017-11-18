@@ -6,6 +6,7 @@
  import React, { PropTypes } from 'react';
  import { connect } from 'react-redux';
  import Helmet from 'react-helmet';
+ import styled from 'styled-components';
 
  import { createStructuredSelector } from 'reselect';
  import { TextField, RaisedButton } from 'material-ui';
@@ -22,8 +23,38 @@
    margin: 'auto',
    width: '50%',
 
-
  };
+ const Title = styled.h1`
+
+   margin:0px;
+   padding:0px;
+   background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+  background: linear-gradient(to right, #ff0055, #2cc7c4);
+ font-weight:300;
+  height:1000px;
+
+   `;
+
+ const Title2 = styled.h2`
+   position: relative;
+ z-index: 1;
+ background: #FFFFFF;
+ max-width: 800px;
+ margin: 0 auto 100px;
+ padding: 4px;
+ text-align: center;
+ `;
+ const Title3 = styled.h3`
+ font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+  `;
 
  export class Signup extends React.Component { // eslint-disable-line react/prefer-stateless-function
    render() {
@@ -35,34 +66,50 @@
              { name: 'description', content: 'Description of Signup' },
            ]}
          />
-         <form onSubmit={(evt) => this.props.sign(evt)}>
-           <TextField
-             hintText="Username"
-             errorText="This field is required."
-             floatingLabelText="Enter Username"
-             rows={1}
-             style={style}
-             id="username"
-           /><br />
-           <TextField
-             hintText="Email"
-             errorText="This field is required."
-             floatingLabelText="Enter Email"
-             rows={2}
-             style={style}
-             id="email"
-           /><br />
-           <TextField
-             hintText="Password"
-             errorText="This field is required."
-             floatingLabelText="Password"
-             type="password"
-             style={style}
-             id="pwd"
-           /><br />
+         <Title>
+           <Title2>
+             <form onSubmit={(evt) => this.props.sign(evt)}>
+               <Title3>
+                 <TextField
+                   hintText="Username"
+                   errorText="This field is required."
+                   floatingLabelText="Enter Username"
+                   rows={1}
+                   style={style}
+                   id="username"
+                 /><br />
+               </Title3>
+               <Title3>
 
-           <RaisedButton label="Subscribe" primary style={style} type="submit" />
-         </form>
+                 <TextField
+                   hintText="Email"
+                   errorText="This field is required."
+                   floatingLabelText="Enter Email"
+                   rows={2}
+                   style={style}
+                   id="email"
+                 /><br />
+               </Title3>
+               <Title3>
+
+
+                 <TextField
+                   hintText="Password"
+                   errorText="This field is required."
+                   floatingLabelText="Password"
+                   type="password"
+                   style={style}
+                   id="pwd"
+                 /><br />
+               </Title3>
+
+
+               <RaisedButton label="Subscribe" primary style={style} type="submit" />
+             </form>
+           </Title2>
+         </Title>
+
+
        </div>
      );
    }

@@ -117,7 +117,7 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                         key={1}
                         hintText="Make a question"
                         floatingLabelText="Make a question"
-                        rows={2}
+                        rows={1}
                         multiLine
                         fullWidth
                         style={style}
@@ -129,7 +129,7 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                         hintText="Make a question"
                         floatingLabelText="Make a question"
                         key={2}
-                        rows={3}
+                        rows={1}
                         fullWidth
                         multiLine
                         style={style}
@@ -140,7 +140,7 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                       <TextField
                         hintText="Make a question"
                         floatingLabelText="Make a questionl"
-                        rows={4}
+                        rows={1}
                         key={3}
                         multiLine
                         fullWidth

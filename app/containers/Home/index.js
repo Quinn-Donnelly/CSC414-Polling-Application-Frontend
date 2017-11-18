@@ -7,6 +7,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import styled from 'styled-components';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import TextField from 'material-ui/TextField';
@@ -22,15 +23,42 @@ const style = {
 
 const styles = {
   headline: {
-    fontSize: 24,
-    paddingTop: 16,
+    fontSize:35,
+    marginTop: -30,
     marginBottom: 12,
-    fontWeight: 400,
+    fontWeight: 40,
   },
   errorStyle: {
     color: blue500,
   },
 };
+const Title = styled.h1`
+
+  margin:0px;
+  padding:0px;
+  background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+ background: linear-gradient(to right,#ff0055, #2cc7c4);
+font-weight:300;
+ height:1000px;
+`;
+const Title2 = styled.h2`
+   fontSize: 24px;
+   text-align: center;
+   display: block;
+   margin: auto;
+   width: 50%;
+   `;
+const Title1 = styled.h2`
+  fontSize: 24px;
+  text-align: center;
+  display: block;
+  margin: auto;
+  width: 50%;
+  `;
+const Title3 = styled.h3`
+color: #FFFFFF
+  `;
+
 export class Home extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props) {
@@ -58,24 +86,33 @@ export class Home extends React.Component { // eslint-disable-line react/prefer-
       >
         <Tab label="Course List" value="a">
           <div>
-            <h2 style={styles.headline}>Select to go to your course list </h2>
-            <RaisedButton
-              label="Course List"
-              primary
-              onClick={() => this.fetchClasses()}
-            />
-            <CourseList />
+            <Title>
+
+
+              <CourseList />
+            </Title>
           </div>
+
         </Tab>
         <Tab label="Join" value="b">
-          <div>
-            <h2 style={styles.headline}>Enter in code to join</h2>
-            <TextField
-              hintText="course code"
-              hintStyle={styles.errorStyle}
-            />
-            <RaisedButton label="Join" primary style={style} />
-          </div>
+          <Title>
+            <div>
+
+              <Title1>
+                <Title3>
+                  <h2 style={styles.headline}>Enter in code to join</h2>
+                </Title3>
+                <Title2>
+                  <TextField
+                    hintText="course code"
+
+                  />
+                  <RaisedButton label="Join" secondary style={style} />
+                </Title2>
+              </Title1>
+
+            </div>
+          </Title>
         </Tab>
       </Tabs>
     );

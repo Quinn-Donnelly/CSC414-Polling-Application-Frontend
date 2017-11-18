@@ -10,6 +10,7 @@ import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import { TextField } from 'material-ui';
 import { createStructuredSelector } from 'reselect';
+import styled from 'styled-components';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -33,6 +34,13 @@ const styles = {
     color: blue500,
   },
 };
+const Title = styled.h1`
+fontSize: 24px;
+text-align: center;
+display: block;
+margin: auto;
+width: 50%;
+`;
 
 export class CourseList extends React.Component {
   constructor(props) {
@@ -132,14 +140,17 @@ export class CourseList extends React.Component {
             { name: 'description', content: 'Description of CourseList' },
           ]}
         />
+
         <List>
           {items}
         </List>
-        <RaisedButton
-          onClick={this.handleOpen}
-          primary
-          label="Add Class"
-        />
+        <Title>
+          <RaisedButton
+            onClick={this.handleOpen}
+            primary
+            label="Add Class"
+          />
+        </Title>
         <Dialog
           title="Dialog With Actions"
           actions={actions}
