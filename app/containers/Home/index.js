@@ -12,6 +12,8 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import TextField from 'material-ui/TextField';
 import { blue500 } from 'material-ui/styles/colors';
 import makeSelectHome from './selectors';
+import CourseList from '../CourseList';
+import { getClasses } from '../CourseList/actions';
 
 const style = {
   margin: 12,
@@ -38,6 +40,10 @@ export class Home extends React.Component { // eslint-disable-line react/prefer-
     };
   }
 
+  fetchClasses() {
+    this.props.dispatch(getClasses());
+  }
+
   handleChange = (value) => {
     this.setState({
       value,
@@ -53,7 +59,13 @@ export class Home extends React.Component { // eslint-disable-line react/prefer-
         <Tab label="Course List" value="a">
           <div>
             <h2 style={styles.headline}>Select to go to your course list </h2>
-            <RaisedButton label="Course List" primary style={style} />
+            <RaisedButton
+              label="Course List"
+              primary
+              style={style}
+              onClick={() => this.fetchClasses()}
+            />
+            <CourseList />
           </div>
         </Tab>
         <Tab label="Join" value="b">

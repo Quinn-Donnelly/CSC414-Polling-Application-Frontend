@@ -18,22 +18,6 @@ export default function createRoutes(store) {
 
   return [
     {
-      path: '/',
-      name: 'home',
-      getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          import('containers/HomePage'),
-        ]);
-
-        const renderRoute = loadModule(cb);
-
-        importModules.then(([component]) => {
-          renderRoute(component);
-        });
-
-        importModules.catch(errorLoading);
-      },
-    }, {
       path: '/login',
       name: 'login',
       getComponent(nextState, cb) {
@@ -48,27 +32,6 @@ export default function createRoutes(store) {
         importModules.then(([reducer, sagas, component]) => {
           injectReducer('login', reducer.default);
           injectSagas(sagas.default);
-          renderRoute(component);
-        });
-
-        importModules.catch(errorLoading);
-      },
-    }, {
-      path: '/courselist',
-      name: 'courseList',
-      getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          import('containers/CourseList/reducer'),
-          import('containers/CourseList/sagas'),
-          import('containers/CourseList'),
-        ]);
-
-        const renderRoute = loadModule(cb);
-
-        importModules.then(([reducer, sagas, component]) => {
-          injectReducer('courseList', reducer.default);
-          injectSagas(sagas.default);
-
           renderRoute(component);
         });
 
@@ -102,19 +65,27 @@ export default function createRoutes(store) {
           import('containers/Home/reducer'),
           import('containers/Home/sagas'),
           import('containers/Home'),
+
+          import('containers/CourseList/reducer'),
+          import('containers/CourseList/sagas'),
+          import('containers/CourseList'),
         ]);
 
         const renderRoute = loadModule(cb);
 
-        importModules.then(([reducer, sagas, component]) => {
+        importModules.then(([reducer, sagas, component, courseReducer, courseSagas]) => {
           injectReducer('home', reducer.default);
           injectSagas(sagas.default);
+          injectReducer('courseList', courseReducer.default);
+          injectSagas(courseSagas.default);
+
           renderRoute(component);
         });
 
         importModules.catch(errorLoading);
       },
-    }, {
+    },
+    {
       path: '/signup',
       name: 'signup',
       getComponent(nextState, cb) {

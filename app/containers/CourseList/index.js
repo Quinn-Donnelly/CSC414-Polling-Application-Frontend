@@ -13,12 +13,11 @@ import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
 import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
-import { List, ListItem } from 'material-ui/List';
-import ActionInfo from 'material-ui/svg-icons/action/info';
-import Avatar from 'material-ui/Avatar';
-import ActionAssignment from 'material-ui/svg-icons/action/assignment';
-import { blue500, yellow600 } from 'material-ui/styles/colors';
+import { List } from 'material-ui/List';
+import { blue500 } from 'material-ui/styles/colors';
 import makeSelectCourseList from './selectors';
+import { getClasses } from './actions';
+import ItemInList from '../../components/ItemInList';
 
 
 const styles = {
@@ -36,6 +35,10 @@ export class CourseList extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.props.dispatch(getClasses());
+  }
+
   handleTouchTap = (event) => {
    // This prevents ghost click.
     event.preventDefault();
@@ -44,14 +47,34 @@ export class CourseList extends React.Component {
       open: true,
       anchorEl: event.currentTarget,
     });
-  };
+  }
 
   handleRequestClose = () => {
     this.setState({
       open: false,
     });
-  };// eslint-disable-line react/prefer-stateless-function
+  };
+
   render() {
+    console.log('rendered', this.props);
+    const courses = this.props.CourseList.classes;
+
+    const items = [];
+
+    for (let i = 0; i < courses.length; i += 1) {
+      if (courses[i].secure) {
+        items.push(
+          <ItemInList
+            key={i}
+            text={courses[i].name}
+            subText="secure"
+          />
+        );
+      } else {
+        items.push(<ItemInList key={i} text={courses[i].name} />);
+      }
+    }
+
     return (
       <div>
         <Helmet
@@ -61,18 +84,7 @@ export class CourseList extends React.Component {
           ]}
         />
         <List>
-          <ListItem
-            leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={blue500} />}
-            rightIcon={<ActionInfo />}
-            primaryText="414"
-            secondaryText="Jan 20, 2014"
-          />
-          <ListItem
-            leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={yellow600} />}
-            rightIcon={<ActionInfo />}
-            primaryText="411"
-            secondaryText="Jan 20, 2014"
-          />
+          {items}
         </List>
         <RaisedButton
           onClick={this.handleTouchTap}
@@ -106,6 +118,9 @@ export class CourseList extends React.Component {
 
 CourseList.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  CourseList: PropTypes.shape({
+    classes: PropTypes.array,
+  }),
 };
 
 const mapStateToProps = createStructuredSelector({

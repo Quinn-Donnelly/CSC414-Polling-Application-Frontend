@@ -7,6 +7,7 @@
 import {
   DEFAULT_ACTION,
   GET_CLASSES,
+  LOADED_CLASSES,
 } from './constants';
 
 export function defaultAction() {
@@ -21,9 +22,9 @@ export function getClasses() {
   };
 }
 
-// export function classesLoaded(data) {
-//   return {
-//     type: LOADED_CLASSES,
-//     payload: data,
-//   }
-// }
+export function classesLoaded(data) {
+  return {
+    type: LOADED_CLASSES,
+    payload: data,
+  };
+}

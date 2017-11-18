@@ -20,7 +20,7 @@ function loginReducer(state = initialState, action) {
       return state;
     case LOGGED_IN:
       return state
-        .set('user', action.payload);
+        .set('user', fromJS(action.payload));
     default:
       return state;
   }
