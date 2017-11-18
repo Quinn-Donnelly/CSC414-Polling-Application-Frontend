@@ -1,5 +1,5 @@
 import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
-import { LOCATION_CHANGE } from 'react-router-redux';
+import { LOCATION_CHANGE, push } from 'react-router-redux';
 import request from 'utils/request';
 import { API_URL } from '../App/constants';
 import {
@@ -25,6 +25,7 @@ export function* login(action) {
     // Call our request helper (see 'utils/request')
     const loginInfo = yield call(request, requestURL, options);
     yield put(loggedIn(loginInfo));
+    yield put(push('/home'));
   } catch (err) {
     console.log(err);
   }
