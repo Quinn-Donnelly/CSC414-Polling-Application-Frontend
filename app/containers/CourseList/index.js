@@ -9,9 +9,10 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { TextField } from 'material-ui';
 import { createStructuredSelector } from 'reselect';
-import Toggle from 'material-ui/Toggle';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import Popover from 'material-ui/Popover';
+import Toggle from 'material-ui/Toggle';
 import Menu from 'material-ui/Menu';
 import { List } from 'material-ui/List';
 import { blue500 } from 'material-ui/styles/colors';
@@ -70,6 +71,14 @@ export class CourseList extends React.Component {
       toggled: evt.target.value,
     });
   }
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
 
   render() {
     const courses = this.props.CourseList.classes;
@@ -89,7 +98,18 @@ export class CourseList extends React.Component {
         items.push(<ItemInList key={i} text={courses[i].name} />);
       }
     }
-
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary
+        onClick={this.handleClose}
+      />,
+      <FlatButton
+        label="Submit"
+        primary
+        onClick={this.handleClose}
+      />,
+    ];
     return (
       <div>
         <Helmet
@@ -102,17 +122,15 @@ export class CourseList extends React.Component {
           {items}
         </List>
         <RaisedButton
-          onClick={this.handleTouchTap}
+          onClick={this.handleOpen}
           primary
           label="Add Class"
         />
-
-        <Popover
+        <Dialog
+          title="Dialog With Actions"
+          actions={actions}
+          modal
           open={this.state.open}
-          anchorEl={this.state.anchorEl}
-          anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-          targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-          onRequestClose={this.handleRequestClose}
         >
           <form onSubmit={(evt) => this.submitNewCourse(evt)}>
             <Menu>
@@ -130,7 +148,8 @@ export class CourseList extends React.Component {
               id="newCourseIsSecure"
             />
           </form>
-        </Popover>
+         Only actions can close this dialog.
+       </Dialog>
 
       </div>
     );
