@@ -90,7 +90,7 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
           value={this.state.value}
           onChange={this.handleChange}
         >
-          <Tab label="Make Questions" value="b">
+          <Tab label="Make Questions" value="a">
             <div>
               <h2 style={styles.headline}>Create and post your question</h2>
               <List>
@@ -157,7 +157,7 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
               <RaisedButton label="Post Questions" style={style} />
             </div>
           </Tab>
-          <Tab label="Questions Status" value="c">
+          <Tab label="Questions Status" value="b">
             <div>
               <Toggle
                 toggled={this.state.open}

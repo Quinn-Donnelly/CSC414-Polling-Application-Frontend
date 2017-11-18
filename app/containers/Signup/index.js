@@ -16,7 +16,13 @@
  } from './actions';
 
  const style = {
-   margin: 30,
+   fontSize: '24px',
+   textAlign: 'center',
+   display: 'block',
+   margin: 'auto',
+   width: '50%',
+
+
  };
 
  export class Signup extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -55,7 +61,7 @@
              id="pwd"
            /><br />
 
-           <RaisedButton label="Subscribe" style={style} type="submit" />
+           <RaisedButton label="Subscribe" primary style={style} type="submit" />
          </form>
        </div>
      );

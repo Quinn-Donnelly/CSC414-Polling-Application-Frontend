@@ -10,15 +10,21 @@ import Helmet from 'react-helmet';
 
 import { createStructuredSelector } from 'reselect';
 import { TextField, RaisedButton } from 'material-ui';
-
 import makeSelectLogin from './selectors';
 import {
   logIn,
 } from './actions';
 
 const style = {
-  margin: 30,
+  fontSize: '24px',
+  textAlign: 'center',
+  display: 'block',
+  margin: 'auto',
+  width: '50%',
+
+
 };
+
 
 /*
  *  To add the communications to the server do the following
@@ -34,7 +40,7 @@ const style = {
 export class Login extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div>
+      <div className="wrapper">
         <Helmet
           title="Login"
           meta={[
@@ -60,8 +66,8 @@ export class Login extends React.Component { // eslint-disable-line react/prefer
             id="pwd"
           /><br />
 
-          <RaisedButton label="Sign In" style={style} type="submit" />
-          <RaisedButton label="Sign UP" style={style} />
+          <RaisedButton label="Sign In" style={style} primary type="submit" />
+          <RaisedButton label="Sign UP" style={style} secondary />
         </form>
 
       </div>

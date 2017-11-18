@@ -62,7 +62,6 @@ export class Home extends React.Component { // eslint-disable-line react/prefer-
             <RaisedButton
               label="Course List"
               primary
-              style={style}
               onClick={() => this.fetchClasses()}
             />
             <CourseList />

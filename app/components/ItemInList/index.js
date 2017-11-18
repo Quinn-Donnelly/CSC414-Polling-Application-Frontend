@@ -14,11 +14,18 @@ import { blue500 } from 'material-ui/styles/colors';
 
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
-
+const styles = {
+  fontSize: '24px',
+  textAlign: 'center',
+  display: 'block',
+  margin: 'auto',
+  width: '50%',
+};
 class ItemInList extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div className="ListItem">
+      styles={styles}
         <ListItem
           leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={blue500} />}
           rightIcon={<ActionInfo />}

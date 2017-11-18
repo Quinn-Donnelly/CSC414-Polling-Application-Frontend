@@ -23,6 +23,12 @@ import ItemInList from '../../components/ItemInList';
 
 
 const styles = {
+  fontSize: '24px',
+  textAlign: 'center',
+  display: 'block',
+  margin: 'auto',
+  width: '50%',
+
   errorStyle: {
     color: blue500,
   },
