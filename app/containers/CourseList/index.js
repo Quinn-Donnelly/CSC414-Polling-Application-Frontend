@@ -16,7 +16,7 @@ import Menu from 'material-ui/Menu';
 import { List } from 'material-ui/List';
 import { blue500 } from 'material-ui/styles/colors';
 import makeSelectCourseList from './selectors';
-import { getClasses } from './actions';
+import { getClasses, addClass } from './actions';
 import ItemInList from '../../components/ItemInList';
 
 
@@ -32,11 +32,21 @@ export class CourseList extends React.Component {
 
     this.state = {
       open: false,
+      toggled: false,
     };
   }
 
   componentDidMount() {
     this.props.dispatch(getClasses());
+  }
+
+  submitNewCourse(evt) {
+    evt.preventDefault();
+    const secure = document.getElementById('newCourseIsSecure');
+    const name = document.getElementById('newCourseName');
+
+    this.props.dispatch(addClass(name.value, secure.value));
+    name.value = '';
   }
 
   handleTouchTap = (event) => {
@@ -55,8 +65,13 @@ export class CourseList extends React.Component {
     });
   };
 
+  handleToggle(evt) {
+    this.setState({
+      toggled: evt.target.value,
+    });
+  }
+
   render() {
-    console.log('rendered', this.props);
     const courses = this.props.CourseList.classes;
 
     const items = [];
@@ -99,16 +114,22 @@ export class CourseList extends React.Component {
           targetOrigin={{ horizontal: 'left', vertical: 'top' }}
           onRequestClose={this.handleRequestClose}
         >
-          <Menu>
-            <TextField
-              hintText=" Course Name"
-              hintStyle={styles.errorStyle}
+          <form onSubmit={(evt) => this.submitNewCourse(evt)}>
+            <Menu>
+              <TextField
+                hintText=" Course Name"
+                hintStyle={styles.errorStyle}
+                id="newCourseName"
+                name="name"
+              />
+            </Menu>
+            <Toggle
+              label=" Secure"
+              style={styles.toggle}
+              name="secure"
+              id="newCourseIsSecure"
             />
-          </Menu>
-          <Toggle
-            label=" Secure"
-            style={styles.toggle}
-          />
+          </form>
         </Popover>
 
       </div>

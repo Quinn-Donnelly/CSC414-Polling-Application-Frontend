@@ -19,7 +19,6 @@ function courseListReducer(state = initialState, action) {
     case DEFAULT_ACTION:
       return state;
     case LOADED_CLASSES:
-      console.log(action);
       return state
         .set('classes', fromJS(action.payload));
     default:
