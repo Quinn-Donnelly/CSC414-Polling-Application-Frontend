@@ -106,7 +106,7 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/coursepage',
+      path: '/coursepage/:courseId',
       name: 'coursePage',
       getComponent(nextState, cb) {
         const importModules = Promise.all([

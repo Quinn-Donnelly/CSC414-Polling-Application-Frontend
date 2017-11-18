@@ -6,6 +6,7 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import { TextField } from 'material-ui';
 import { createStructuredSelector } from 'reselect';
@@ -83,10 +84,15 @@ export class CourseList extends React.Component {
             key={i}
             text={courses[i].name}
             subText="secure"
+            onClick={() => this.props.dispatch(push(`/coursepage/${courses[i].id}`))}
           />
         );
       } else {
-        items.push(<ItemInList key={i} text={courses[i].name} />);
+        items.push(<ItemInList
+          key={i}
+          text={courses[i].name}
+          onClick={() => this.props.dispatch(push(`/coursepage/${courses[i].id}`))}
+        />);
       }
     }
 

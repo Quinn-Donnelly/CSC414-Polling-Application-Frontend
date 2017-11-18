@@ -17,6 +17,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { blue500 } from 'material-ui/styles/colors';
 import makeSelectCoursePage from './selectors';
+import { selectClasses } from '../CourseList/selectors';
 
 const style = {
   margin: 12,
@@ -46,12 +47,22 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
     super(props);
     this.state = {
       value: 'a',
+      currentCourse: {},
     };
   }
   state = {
     open: false,
     checked: false,
   };
+
+  componentWillMount() {
+    const classes = this.props.Classes.toJS();
+    const currentCourse = classes.find((course) => (course.id === this.props.params.courseId));
+
+    this.setState({
+      currentCourse,
+    });
+  }
 
   handleToggle = () => {
     this.setState({
@@ -74,7 +85,7 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
   render() {
     return (
       <div>
-        <h2 style={styles.headline}>Course Code 112134314</h2>
+        <h2 style={styles.headline}>{this.state.currentCourse.name}</h2>
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}
@@ -84,12 +95,13 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
               <h2 style={styles.headline}>Create and post your question</h2>
               <List>
                 <Subheader>Nested List Items</Subheader>
-                <ListItem>
+                <ListItem key={89}>
                   <TextField
                     hintText="Make a question"
                     errorText="This field is required."
                     floatingLabelText="Make a questionl"
                     rows={1}
+                    key={0}
                     multiLine
                     fullWidth
                     style={style}
@@ -97,10 +109,12 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                   />
                 </ListItem>
                 <ListItem
+                  key={786}
                   primaryText="Answers"
                   nestedItems={[
-                    <ListItem>
+                    <ListItem key={43}>
                       <TextField
+                        key={1}
                         hintText="Make a question"
                         floatingLabelText="Make a question"
                         rows={2}
@@ -110,10 +124,11 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                         id="Answers"
                       />
                     </ListItem>,
-                    <ListItem>
+                    <ListItem key={123}>
                       <TextField
                         hintText="Make a question"
                         floatingLabelText="Make a question"
+                        key={2}
                         rows={3}
                         fullWidth
                         multiLine
@@ -121,18 +136,19 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                         id="Answers"
                       />
                     </ListItem>,
-                    <ListItem>
+                    <ListItem key={432}>
                       <TextField
                         hintText="Make a question"
                         floatingLabelText="Make a questionl"
                         rows={4}
+                        key={3}
                         multiLine
                         fullWidth
                         style={style}
                         id="Answers"
                       />
                     </ListItem>,
-                    <ListItem>
+                    <ListItem key={4}>
                       <RaisedButton label="Add Question" style={style} />
                     </ListItem>,
                   ]}
@@ -153,9 +169,9 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
 
               <List>
                 <Subheader>Nested List Items</Subheader>
-                <ListItem primaryText="Unanswered" leftIcon={<ContentSend />} />
+                <ListItem key={100} primaryText="Unanswered" leftIcon={<ContentSend />} />
                 <ListItem
-                  key={1}
+                  key={90}
                   primaryText="Answered"
                   leftIcon={<ContentInbox />}
                   initiallyOpen
@@ -187,11 +203,14 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
 }
 
 CoursePage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  // dispatch: PropTypes.func.isRequired,
+  Classes: PropTypes.any,
+  params: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   CoursePage: makeSelectCoursePage(),
+  Classes: selectClasses(),
 });
 
 function mapDispatchToProps(dispatch) {
