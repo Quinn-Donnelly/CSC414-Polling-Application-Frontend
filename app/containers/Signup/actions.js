@@ -11,14 +11,11 @@
    };
  }
 
- export function signUp(email, pass, username) {
+ export function signUp(email, password, username) {
    return {
      type: SIGN_UP,
      email,
-     pwd: pass,
+     password,
      username,
    };
  }
-
- // TODO: Currently going to store all login info from the api in plain text to the
- // reducer need to encrypt the token and use cookies with a fallback
