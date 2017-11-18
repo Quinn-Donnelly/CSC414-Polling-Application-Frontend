@@ -44,11 +44,14 @@ export class CourseList extends React.Component {
 
   submitNewCourse(evt) {
     evt.preventDefault();
+    console.log('hitting');
     const secure = document.getElementById('newCourseIsSecure');
     const name = document.getElementById('newCourseName');
 
     this.props.dispatch(addClass(name.value, secure.value));
     name.value = '';
+
+    this.setState({ open: false });
   }
 
   handleTouchTap = (event) => {
@@ -76,8 +79,8 @@ export class CourseList extends React.Component {
     this.setState({ open: true });
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
+  handleClose = (evt) => {
+    this.submitNewCourse(evt);
   };
 
 
