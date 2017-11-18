@@ -6,6 +6,7 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 
 import { createStructuredSelector } from 'reselect';
@@ -66,8 +67,8 @@ export class Login extends React.Component { // eslint-disable-line react/prefer
             id="pwd"
           /><br />
 
-          <RaisedButton label="Sign In" style={style} primary type="submit" />
-          <RaisedButton label="Sign UP" style={style} secondary />
+          <RaisedButton label="Sign In" style={style} type="submit" />
+          <RaisedButton label="Sign UP" style={style} onClick={() => this.props.dispatch(push('/signup'))} />
         </form>
 
       </div>
@@ -76,7 +77,7 @@ export class Login extends React.Component { // eslint-disable-line react/prefer
 }
 
 Login.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
 };
 

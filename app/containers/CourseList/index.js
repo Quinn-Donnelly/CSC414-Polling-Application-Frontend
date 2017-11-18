@@ -50,7 +50,6 @@ export class CourseList extends React.Component {
 
   submitNewCourse(evt) {
     evt.preventDefault();
-    console.log('hitting');
     const secure = document.getElementById('newCourseIsSecure');
     const name = document.getElementById('newCourseName');
 

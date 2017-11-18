@@ -16,7 +16,7 @@ export function* fetchClasses() {
     },
   };
 
-  const filter = JSON.stringify({ teacherId: userId });
+  const filter = JSON.stringify({ where: { teacherId: userId } });
   const requestURL = `${API_URL}/classrooms?filter=${filter}&access_token=${accessToken}`;
 
   try {
