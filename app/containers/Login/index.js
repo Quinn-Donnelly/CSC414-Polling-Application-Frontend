@@ -25,7 +25,7 @@ const style = {
 
 
 };
-const Title = styled.h1`
+const Title = styled.div`
 
   margin:0px;
   padding:200px 0px 0px 0px;
@@ -36,7 +36,7 @@ font-weight:300;
 
   `;
 
-const Title2 = styled.h2`
+const Title2 = styled.div`
 position: relative;
  margin-top:  30;
 z-index: 1;

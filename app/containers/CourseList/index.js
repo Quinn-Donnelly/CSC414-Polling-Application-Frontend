@@ -34,7 +34,7 @@ const styles = {
     color: blue500,
   },
 };
-const Title = styled.h1`
+const Title = styled.div`
 fontSize: 24px;
 text-align: center;
 display: block;

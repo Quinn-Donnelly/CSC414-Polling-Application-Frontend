@@ -32,7 +32,7 @@ const styles = {
     color: blue500,
   },
 };
-const Title = styled.h1`
+const Title = styled.div`
 
   margin:0px;
   padding:0px;
@@ -41,21 +41,21 @@ const Title = styled.h1`
 font-weight:300;
  height:1000px;
 `;
-const Title2 = styled.h2`
+const Title2 = styled.div`
    fontSize: 24px;
    text-align: center;
    display: block;
    margin: auto;
    width: 50%;
    `;
-const Title1 = styled.h2`
+const Title1 = styled.div`
   fontSize: 24px;
   text-align: center;
   display: block;
   margin: auto;
   width: 50%;
   `;
-const Title3 = styled.h3`
+const Title3 = styled.div`
 color: #FFFFFF
   `;
 
