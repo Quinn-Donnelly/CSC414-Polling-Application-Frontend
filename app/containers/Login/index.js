@@ -42,26 +42,27 @@ export class Login extends React.Component { // eslint-disable-line react/prefer
           ]}
         />
 
-        <TextField
-          hintText="Email"
-          errorText="This field is required."
-          floatingLabelText="Enter Email"
-          rows={1}
-          style={style}
-          id="email"
-        /><br />
-        <TextField
-          hintText="Password"
-          errorText="This field is required."
-          floatingLabelText="Password"
-          type="password"
-          style={style}
-          id="pwd"
-        /><br />
+        <form onSubmit={(evt) => this.props.login(evt)}>
+          <TextField
+            hintText="Email"
+            errorText="This field is required."
+            floatingLabelText="Enter Email"
+            rows={1}
+            style={style}
+            id="email"
+          /><br />
+          <TextField
+            hintText="Password"
+            errorText="This field is required."
+            floatingLabelText="Password"
+            type="password"
+            style={style}
+            id="pwd"
+          /><br />
 
-
-        <RaisedButton label="Sign In" style={style} onClick={this.props.login} />
-        <RaisedButton label="Sign UP" style={style} />
+          <RaisedButton label="Sign In" style={style} type="submit" />
+          <RaisedButton label="Sign UP" style={style} />
+        </form>
 
       </div>
     );
@@ -80,10 +81,13 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    login: () => {
+    login: (evt) => {
+      evt.preventDefault();
       const pwd = document.getElementById('pwd').value;
       const email = document.getElementById('email').value;
-      dispatch(logIn(email, pwd));
+      if (pwd !== '' && email !== '') {
+        dispatch(logIn(email, pwd));
+      }
     },
   };
 }
