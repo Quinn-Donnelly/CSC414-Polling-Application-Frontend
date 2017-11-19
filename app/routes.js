@@ -68,16 +68,21 @@ export default function createRoutes(store) {
 
           import('containers/CourseList/reducer'),
           import('containers/CourseList/sagas'),
+          import('containers/Login/reducer'),
+          import('containers/Login/sagas'),
+
           import('containers/CourseList'),
         ]);
 
         const renderRoute = loadModule(cb);
 
-        importModules.then(([reducer, sagas, component, courseReducer, courseSagas]) => {
+        importModules.then(([reducer, sagas, component, courseReducer, courseSagas, loginReducer, loginSagas]) => {
           injectReducer('home', reducer.default);
           injectSagas(sagas.default);
           injectReducer('courseList', courseReducer.default);
           injectSagas(courseSagas.default);
+          injectReducer('login', loginReducer.default);
+          injectSagas(loginSagas.default);
 
           renderRoute(component);
         });

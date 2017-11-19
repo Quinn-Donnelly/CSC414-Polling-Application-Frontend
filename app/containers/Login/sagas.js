@@ -25,10 +25,18 @@ export function* login(action) {
     // Call our request helper (see 'utils/request')
     const loginInfo = yield call(request, requestURL, options);
     yield put(loggedIn(loginInfo));
+    yield call(storeLogin, loginInfo);
     yield put(push('/home'));
   } catch (err) {
     console.log(err);
   }
+}
+
+function storeLogin(loginData) {
+  const date = new Date();
+  date.setTime(date.getTime() + (loginData.ttl * 24 * 60 * 60 * 1000));
+  document.cookie = `userId=${loginData.userId}; path=/; domain=localhost; Expires=${date.toUTCString()};`;
+  document.cookie = `id=${loginData.id}; path=/; domain=localhost; Expires=${date.toUTCString()};`;
 }
 
 // Individual exports for testing
