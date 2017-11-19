@@ -8,11 +8,13 @@ import { fromJS } from 'immutable';
 import {
   DEFAULT_ACTION,
   LOGGED_IN,
+  LOG_OUT,
 } from './constants';
 
 const initalToken = document.cookie;
 const initialState = fromJS({
-  user: cookieToObject(initalToken),
+  user: (initalToken !== '') ? cookieToObject(initalToken) : {},
+  logged: initalToken !== '',
 });
 
 function cookieToObject(cookie) {
@@ -31,7 +33,12 @@ function loginReducer(state = initialState, action) {
       return state;
     case LOGGED_IN:
       return state
-        .set('user', fromJS(action.payload));
+        .set('user', fromJS(action.payload))
+        .set('logged', true);
+    case LOG_OUT:
+      return state
+        .set('user', '')
+        .set('logged', false);
     default:
       return state;
   }

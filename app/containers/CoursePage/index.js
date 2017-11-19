@@ -14,6 +14,7 @@ import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import ContentSend from 'material-ui/svg-icons/content/send';
+import FlatButton from 'material-ui/FlatButton';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
@@ -22,6 +23,8 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import { blue500 } from 'material-ui/styles/colors';
 import makeSelectCoursePage from './selectors';
 import { selectClasses } from '../CourseList/selectors';
+import { logOut } from '../Login/actions';
+import { selectLoggedIn } from '../Login/selectors';
 
 const style = {
   margin: 12,
@@ -92,6 +95,7 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
         <AppBar
           title={this.state.currentCourse.name}
           iconElementLeft={<IconButton onClick={() => this.props.dispatch(goBack())}><ArrowBack /></IconButton>}
+          iconElementRight={this.props.logged ? <FlatButton label="Log Out" onClick={() => this.props.exit()} /> : <FlatButton label="Login" />}
         />
         <Tabs
           value={this.state.value}
@@ -213,16 +217,20 @@ CoursePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   Classes: PropTypes.any,
   params: PropTypes.object.isRequired,
+  exit: PropTypes.func.isRequired,
+  logged: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   CoursePage: makeSelectCoursePage(),
   Classes: selectClasses(),
+  logged: selectLoggedIn(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    exit: () => dispatch(logOut()),
   };
 }
 

@@ -8,6 +8,7 @@ import {
   DEFAULT_ACTION,
   LOG_IN,
   LOGGED_IN,
+  LOG_OUT,
 } from './constants';
 
 export function defaultAction() {
@@ -22,6 +23,12 @@ export function logIn(email, pass) {
     email,
     pwd: pass,
   };
+}
+
+export function logOut() {
+  return ({
+    type: LOG_OUT,
+  });
 }
 
 // TODO: Currently going to store all login info from the api in plain text to the

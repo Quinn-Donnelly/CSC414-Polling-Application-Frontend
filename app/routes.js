@@ -118,13 +118,18 @@ export default function createRoutes(store) {
           import('containers/CoursePage/reducer'),
           import('containers/CoursePage/sagas'),
           import('containers/CoursePage'),
+
+          import('containers/Login/reducer'),
+          import('containers/Login/sagas'),
         ]);
 
         const renderRoute = loadModule(cb);
 
-        importModules.then(([reducer, sagas, component]) => {
+        importModules.then(([reducer, sagas, component, loginReducer, loginSagas]) => {
           injectReducer('coursePage', reducer.default);
           injectSagas(sagas.default);
+          injectReducer('login', loginReducer.default);
+          injectSagas(loginSagas.default);
           renderRoute(component);
         });
 

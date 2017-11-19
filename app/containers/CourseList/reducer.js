@@ -9,6 +9,9 @@ import {
   DEFAULT_ACTION,
   LOADED_CLASSES,
 } from './constants';
+import {
+  LOG_OUT,
+} from '../Login/constants';
 
 const initialState = fromJS({
   classes: [],
@@ -21,6 +24,8 @@ function courseListReducer(state = initialState, action) {
     case LOADED_CLASSES:
       return state
         .set('classes', fromJS(action.payload));
+    case LOG_OUT:
+      return state.set('classes', []);
     default:
       return state;
   }

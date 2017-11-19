@@ -18,6 +18,11 @@ const selectToken = () => createSelector(
   (substate) => substate.getIn(['user', 'id'])
 );
 
+const selectLoggedIn = () => createSelector(
+  selectLoginDomain(),
+  (substate) => substate.get('logged')
+);
+
 /**
  * Default selector used by Login
  */
@@ -32,4 +37,5 @@ export {
   selectLoginDomain,
   selectUserId,
   selectToken,
+  selectLoggedIn,
 };
