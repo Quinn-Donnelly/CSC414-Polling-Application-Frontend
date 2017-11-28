@@ -15,6 +15,7 @@
  import {
    signUp,
  } from './actions';
+ import myImage from '../../background1.png';
 
  const style = {
    fontSize: '24px',
@@ -31,6 +32,8 @@
    background: -webkit-linear-gradient(left, #25c481, #25b7c4);
   background: linear-gradient(to right, #ff0055, #2cc7c4);
  font-weight:300;
+ background-image: url(${myImage});
+ background-size:cover;
   height:1000px;
 
    `;

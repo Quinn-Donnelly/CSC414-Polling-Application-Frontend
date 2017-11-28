@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { goBack } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import { TextField } from 'material-ui';
+import styled from 'styled-components';
 import { List, ListItem } from 'material-ui/List';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import AppBar from 'material-ui/AppBar';
@@ -17,7 +18,6 @@ import ContentSend from 'material-ui/svg-icons/content/send';
 import FlatButton from 'material-ui/FlatButton';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Subheader from 'material-ui/Subheader';
-import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { blue500 } from 'material-ui/styles/colors';
@@ -25,11 +25,22 @@ import makeSelectCoursePage from './selectors';
 import { selectClasses } from '../CourseList/selectors';
 import { logOut } from '../Login/actions';
 import { selectLoggedIn } from '../Login/selectors';
+import myImage from '../../background1.png';
 
 const style = {
   margin: 12,
 };
+const Title = styled.div`
 
+  margin:0px;
+  padding:200px 0px 0px 0px;
+  background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+ background: linear-gradient(to right,#ff0055, #2cc7c4);
+  background-image: url(${myImage});
+  background-size:cover;
+ height:1000px;
+
+  `;
 
 const styles = {
   headline: {
@@ -97,117 +108,118 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
           iconElementLeft={<IconButton onClick={() => this.props.dispatch(goBack())}><ArrowBack /></IconButton>}
           iconElementRight={this.props.logged ? <FlatButton label="Log Out" onClick={() => this.props.exit()} /> : <FlatButton label="Login" />}
         />
+
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}
         >
+
           <Tab label="Make Questions" value="a">
             <div>
-              <h2 style={styles.headline}>Create and post your question</h2>
-              <List>
-                <Subheader>Nested List Items</Subheader>
-                <ListItem key={89}>
-                  <TextField
-                    hintText="Make a question"
-                    errorText="This field is required."
-                    floatingLabelText="Make a questionl"
-                    rows={1}
-                    key={0}
-                    multiLine
-                    fullWidth
-                    style={style}
-                    id="question"
+              <Title>
+                <h2 style={styles.headline}>Create and post your question</h2>
+                <List>
+                  <Subheader>Nested List Items</Subheader>
+                  <ListItem key={89}>
+                    <TextField
+                      hintText="Make a question"
+                      errorText="This field is required."
+                      floatingLabelText="Make a questionl"
+                      rows={1}
+                      key={0}
+                      multiLine
+                      fullWidth
+                      style={style}
+                      id="question"
+                    />
+                  </ListItem>
+                  <ListItem
+                    key={786}
+                    primaryText="Answers"
+                    nestedItems={[
+                      <ListItem key={43}>
+                        <TextField
+                          key={1}
+                          hintText="Make a question"
+                          floatingLabelText="Make a question"
+                          rows={1}
+                          multiLine
+                          fullWidth
+                          style={style}
+                          id="Answers"
+                        />
+                      </ListItem>,
+                      <ListItem key={123}>
+                        <TextField
+                          hintText="Make a question"
+                          floatingLabelText="Make a question"
+                          key={2}
+                          rows={1}
+                          fullWidth
+                          multiLine
+                          style={style}
+                          id="Answers"
+                        />
+                      </ListItem>,
+                      <ListItem key={432}>
+                        <TextField
+                          hintText="Make a question"
+                          floatingLabelText="Make a questionl"
+                          rows={1}
+                          key={3}
+                          multiLine
+                          fullWidth
+                          style={style}
+                          id="Answers"
+                        />
+                      </ListItem>,
+                      <ListItem key={4}>
+                        <RaisedButton label="Add Question" style={style} />
+                      </ListItem>,
+                    ]}
                   />
-                </ListItem>
-                <ListItem
-                  key={786}
-                  primaryText="Answers"
-                  nestedItems={[
-                    <ListItem key={43}>
-                      <TextField
-                        key={1}
-                        hintText="Make a question"
-                        floatingLabelText="Make a question"
-                        rows={1}
-                        multiLine
-                        fullWidth
-                        style={style}
-                        id="Answers"
-                      />
-                    </ListItem>,
-                    <ListItem key={123}>
-                      <TextField
-                        hintText="Make a question"
-                        floatingLabelText="Make a question"
-                        key={2}
-                        rows={1}
-                        fullWidth
-                        multiLine
-                        style={style}
-                        id="Answers"
-                      />
-                    </ListItem>,
-                    <ListItem key={432}>
-                      <TextField
-                        hintText="Make a question"
-                        floatingLabelText="Make a questionl"
-                        rows={1}
-                        key={3}
-                        multiLine
-                        fullWidth
-                        style={style}
-                        id="Answers"
-                      />
-                    </ListItem>,
-                    <ListItem key={4}>
-                      <RaisedButton label="Add Question" style={style} />
-                    </ListItem>,
-                  ]}
-                />
-              </List>
-              <RaisedButton label="Post Questions" style={style} />
+                </List>
+                <RaisedButton label="Post Questions" style={style} />
+              </Title>
             </div>
           </Tab>
           <Tab label="Questions Status" value="b">
             <div>
-              <Toggle
-                toggled={this.state.open}
-                onToggle={this.handleToggle}
-                labelPosition="right"
-                label="This toggle controls the expanded state of the submenu item."
-              />
-              <br />
+              <Title>
 
-              <List>
-                <Subheader>Nested List Items</Subheader>
-                <ListItem key={100} primaryText="Unanswered" leftIcon={<ContentSend />} />
-                <ListItem
-                  key={90}
-                  primaryText="Answered"
-                  leftIcon={<ContentInbox />}
-                  initiallyOpen
-                  primaryTogglesNestedList
-                  nestedItems={[
-                    <ListItem
-                      key={5}
-                      primaryText="Question 1"
-                    />,
-                    <ListItem
-                      key={6}
-                      primaryText="Question 2"
-                    />,
-                    <ListItem
-                      key={7}
-                      primaryText="Question 3"
-                      open={this.state.open}
-                      onNestedListToggle={this.handleNestedListToggle}
-                    />,
-                  ]}
-                />
-              </List>
+                <List>
+                  <Subheader>Nested List Items</Subheader>
+                  <ListItem key={100} primaryText="Unanswered" leftIcon={<ContentSend />} />
+                  <ListItem
+                    key={90}
+                    primaryText="Answered"
+                    leftIcon={<ContentInbox />}
+                    initiallyOpen
+                    primaryTogglesNestedList
+                    nestedItems={[
+                      <ListItem
+                        key={5}
+                        primaryText="Question 1"
+                      />,
+                      <ListItem
+                        key={6}
+                        primaryText="Question 2"
+                      />,
+                      <ListItem
+                        key={7}
+                        primaryText="Question 3"
+                        open={this.state.open}
+                        onNestedListToggle={this.handleNestedListToggle}
+                      />,
+                    ]}
+                  />
+                </List>
+              </Title>
             </div>
           </Tab>
+
         </Tabs>
+
       </div>
     );
   }

@@ -15,6 +15,7 @@ import { blue500 } from 'material-ui/styles/colors';
 import makeSelectHome from './selectors';
 import CourseList from '../CourseList';
 import { getClasses } from '../CourseList/actions';
+import myImage from '../../background1.png';
 
 const style = {
   margin: 12,
@@ -38,6 +39,8 @@ const Title = styled.div`
   padding:0px;
   background: -webkit-linear-gradient(left, #25c481, #25b7c4);
  background: linear-gradient(to right,#ff0055, #2cc7c4);
+ background-image: url(${myImage});
+ background-size:cover;
 font-weight:300;
  height:1000px;
 `;

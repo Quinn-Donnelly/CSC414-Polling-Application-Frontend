@@ -15,6 +15,7 @@ import makeSelectLogin from './selectors';
 import {
   logIn,
 } from './actions';
+import myImage from '../../background1.png';
 
 const style = {
   fontSize: '24px',
@@ -31,7 +32,8 @@ const Title = styled.div`
   padding:200px 0px 0px 0px;
   background: -webkit-linear-gradient(left, #25c481, #25b7c4);
  background: linear-gradient(to right,#ff0055, #2cc7c4);
-font-weight:300;
+  background-image: url(${myImage});
+  background-size:cover;
  height:1000px;
 
   `;
@@ -43,7 +45,7 @@ z-index: 1;
 background: #FFFFFF;
 max-width: 800px;
 margin: 0 auto 200px;
-padding: 6%;
+padding: 3%;
 
 text-align: center;
 `;
@@ -57,6 +59,19 @@ font-family: "Roboto", sans-serif;
  padding: 15px ;
  box-sizing: border-box;
  font-size: 14px;
+ `;
+const Title1 = styled.div`
+ font-family: "Roboto", sans-serif;
+ position: relative;
+  margin-top:  1;
+ z-index: 1;
+ background: #f2f2f2FF;
+ max-width: 400px;
+ margin: 0 auto 10px;
+ padding: 0;
+ font-size: 20px;
+
+ text-align: center;
  `;
 /*
  *  To add the communications to the server do the following
@@ -84,8 +99,14 @@ export class Login extends React.Component { // eslint-disable-line react/prefer
             { name: 'description', content: 'Description of Login' },
           ]}
         />
+
+
         <Title>
+        <Title1>
+          <h1>Poller</h1>
+          </Title1>
           <Title2>
+                <h2>LOGIN</h2>
             <form onSubmit={(evt) => this.props.login(evt)}>
               <Title3>
                 <TextField
