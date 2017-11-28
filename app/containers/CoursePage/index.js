@@ -34,8 +34,6 @@ const Title = styled.div`
 
   margin:0px;
   padding:200px 0px 0px 0px;
-  background: -webkit-linear-gradient(left, #25c481, #25b7c4);
- background: linear-gradient(to right,#ff0055, #2cc7c4);
   background-image: url(${myImage});
   background-size:cover;
  height:1000px;
@@ -140,8 +138,8 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                       <ListItem key={43}>
                         <TextField
                           key={1}
-                          hintText="Make a question"
-                          floatingLabelText="Make a question"
+                          hintText="Make an Answer"
+                          floatingLabelText="Make an Answer"
                           rows={1}
                           multiLine
                           fullWidth
@@ -151,8 +149,8 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                       </ListItem>,
                       <ListItem key={123}>
                         <TextField
-                          hintText="Make a question"
-                          floatingLabelText="Make a question"
+                          hintText="Make an Answer"
+                          floatingLabelText="Make an Answer"
                           key={2}
                           rows={1}
                           fullWidth
@@ -163,8 +161,8 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                       </ListItem>,
                       <ListItem key={432}>
                         <TextField
-                          hintText="Make a question"
-                          floatingLabelText="Make a questionl"
+                          hintText="Make an Answer"
+                          floatingLabelText="Make an Answer"
                           rows={1}
                           key={3}
                           multiLine
@@ -174,12 +172,12 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                         />
                       </ListItem>,
                       <ListItem key={4}>
-                        <RaisedButton label="Add Question" style={style} />
+                        <RaisedButton label="Add Answer" style={style} />
                       </ListItem>,
                     ]}
                   />
                 </List>
-                <RaisedButton label="Post Questions" style={style} />
+                <RaisedButton label="Post Questions" primary style={style} />
               </Title>
             </div>
           </Tab>

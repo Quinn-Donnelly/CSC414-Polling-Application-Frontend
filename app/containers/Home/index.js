@@ -37,8 +37,6 @@ const Title = styled.div`
 
   margin:0px;
   padding:0px;
-  background: -webkit-linear-gradient(left, #25c481, #25b7c4);
- background: linear-gradient(to right,#ff0055, #2cc7c4);
  background-image: url(${myImage});
  background-size:cover;
 font-weight:300;
@@ -110,7 +108,7 @@ export class Home extends React.Component { // eslint-disable-line react/prefer-
                     hintText="course code"
 
                   />
-                  <RaisedButton label="Join" secondary style={style} />
+                  <RaisedButton label="Join" primary style={style} />
                 </Title2>
               </Title1>
 

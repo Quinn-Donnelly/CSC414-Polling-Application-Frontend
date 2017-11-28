@@ -28,13 +28,11 @@
  const Title = styled.h1`
 
    margin:0px;
-   padding:200px 0px 0px 0px;
-   background: -webkit-linear-gradient(left, #25c481, #25b7c4);
-  background: linear-gradient(to right, #ff0055, #2cc7c4);
- font-weight:300;
+   padding:100px 0px 0px 0px;
+ font-weight:30;
  background-image: url(${myImage});
  background-size:cover;
-  height:1000px;
+  height:1200px;
 
    `;
 
@@ -46,7 +44,7 @@
  max-width: 800px;
  margin-top:  30;
  margin: 0 auto 100px;
- padding: 6%;
+ padding: 2%;
 
 
  text-align: center;
@@ -76,6 +74,7 @@
          />
          <Title>
            <Title2>
+             <h2>SIGN UP</h2>
              <form onSubmit={(evt) => this.props.sign(evt)}>
                <Title3>
                  <TextField

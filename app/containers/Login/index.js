@@ -30,11 +30,9 @@ const Title = styled.div`
 
   margin:0px;
   padding:200px 0px 0px 0px;
-  background: -webkit-linear-gradient(left, #25c481, #25b7c4);
- background: linear-gradient(to right,#ff0055, #2cc7c4);
   background-image: url(${myImage});
   background-size:cover;
- height:1000px;
+ height:1200px;
 
   `;
 
