@@ -102,11 +102,11 @@ export class Login extends React.Component { // eslint-disable-line react/prefer
 
 
         <Title>
-        <Title1>
-          <h1>Poller</h1>
+          <Title1>
+            <h1>Poller</h1>
           </Title1>
           <Title2>
-                <h2>LOGIN</h2>
+            <h2>LOGIN</h2>
             <form onSubmit={(evt) => this.props.login(evt)}>
               <Title3>
                 <TextField
