@@ -15,7 +15,8 @@
  import {
    signUp,
  } from './actions';
- import myImage from '../../background1.png';
+ import myImage from '../../img/background1.png';
+ import myImage2 from '../../img/pollerName.png';
 
  const style = {
    fontSize: '24px',
@@ -26,33 +27,27 @@
 
  };
  const Title = styled.h1`
-
    margin:0px;
    padding:100px 0px 0px 0px;
  font-weight:30;
  background-image: url(${myImage});
  background-size:cover;
   height:1200px;
-
    `;
 
  const Title2 = styled.div`
    position: relative;
-
  z-index: 1;
  background: #FFFFFF;
  max-width: 800px;
  margin-top:  30;
  margin: 0 auto 100px;
  padding: 2%;
-
-
  text-align: center;
  `;
  const Title3 = styled.div`
  font-family: "Roboto", sans-serif;
   outline: ;
-
   background: #f2f2f2;
   width: 100%;
   border: ;
@@ -74,7 +69,8 @@
          />
          <Title>
            <Title2>
-             <h2>SIGN UP</h2>
+             <img src={myImage2} height = '35%' width = '35%' />
+             <h5>SIGN UP</h5>
              <form onSubmit={(evt) => this.props.sign(evt)}>
                <Title3>
                  <TextField
@@ -109,6 +105,16 @@
                    id="pwd"
                  /><br />
                </Title3>
+               <Title3>
+                 <TextField
+                   hintText="Confirm Password"
+                   errorText="This field is required."
+                   floatingLabelText="Confirm Password"
+                   type="password"
+                   style={style}
+                   id="pwd2"
+                 /><br />
+               </Title3>
 
 
                <RaisedButton label="Subscribe" primary style={style} type="submit" />
@@ -135,11 +141,21 @@
      sign: (evt) => {
        evt.preventDefault();
        const pwd = document.getElementById('pwd').value;
+       const pwd2 = document.getElementById('pwd2').value;
        const email = document.getElementById('email').value;
        const username = document.getElementById('username').value;
-       if (pwd !== '' && email !== '' && username !== '') {
-         dispatch(signUp(email, pwd, username));
-       }
+      if( pwd === pwd2) {
+
+        if (pwd !== '' && email !== '' && username !== '') {
+          dispatch(signUp(email, pwd, username));
+        }
+      } else {
+
+      }
+
+
+
+
      },
    };
  }

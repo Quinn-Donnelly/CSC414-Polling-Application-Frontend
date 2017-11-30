@@ -15,7 +15,10 @@ import makeSelectLogin from './selectors';
 import {
   logIn,
 } from './actions';
-import myImage from '../../background1.png';
+import myImage from '../../img/background1.png';
+import myImage2 from '../../img/pollerbear2.png';
+
+
 
 const style = {
   fontSize: '24px',
@@ -99,12 +102,15 @@ export class Login extends React.Component { // eslint-disable-line react/prefer
         />
 
 
+
         <Title>
-          <Title1>
-            <h1>Poller</h1>
+            <Title1>
+
           </Title1>
           <Title2>
-            <h2>LOGIN</h2>
+
+            <img src={myImage2} height = '35%' width = '35%' />
+            <h4>LOGIN</h4>
             <form onSubmit={(evt) => this.props.login(evt)}>
               <Title3>
                 <TextField

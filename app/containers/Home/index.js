@@ -15,7 +15,7 @@ import { blue500 } from 'material-ui/styles/colors';
 import makeSelectHome from './selectors';
 import CourseList from '../CourseList';
 import { getClasses } from '../CourseList/actions';
-import myImage from '../../background1.png';
+import myImage from '../../img/background1.png';
 
 const style = {
   margin: 12,
