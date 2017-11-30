@@ -69,7 +69,7 @@
          />
          <Title>
            <Title2>
-             <img src={myImage2} height = '35%' width = '35%' />
+             <img src={myImage2} height="35%" width="35%" alt="Poller Name Logo" />
              <h5>SIGN UP</h5>
              <form onSubmit={(evt) => this.props.sign(evt)}>
                <Title3>
@@ -144,18 +144,11 @@
        const pwd2 = document.getElementById('pwd2').value;
        const email = document.getElementById('email').value;
        const username = document.getElementById('username').value;
-      if( pwd === pwd2) {
-
-        if (pwd !== '' && email !== '' && username !== '') {
-          dispatch(signUp(email, pwd, username));
-        }
-      } else {
-
-      }
-
-
-
-
+       if (pwd === pwd2) {
+         if (pwd !== '' && email !== '' && username !== '') {
+           dispatch(signUp(email, pwd, username));
+         }
+       }
      },
    };
  }

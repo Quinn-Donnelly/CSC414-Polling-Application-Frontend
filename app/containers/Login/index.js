@@ -16,8 +16,7 @@ import {
   logIn,
 } from './actions';
 import myImage from '../../img/background1.png';
-import myImage2 from '../../img/pollerbear2.png';
-
+import myImage2 from '../../img/pollerName.png';
 
 
 const style = {
@@ -61,19 +60,6 @@ font-family: "Roboto", sans-serif;
  box-sizing: border-box;
  font-size: 14px;
  `;
-const Title1 = styled.div`
- font-family: "Roboto", sans-serif;
- position: relative;
-  margin-top:  1;
- z-index: 1;
- background: #f2f2f2FF;
- max-width: 400px;
- margin: 0 auto 10px;
- padding: 0;
- font-size: 20px;
-
- text-align: center;
- `;
 /*
  *  To add the communications to the server do the following
  *  1. Create a constant that will be the name of whatever action you at doing in ./constants
@@ -102,14 +88,10 @@ export class Login extends React.Component { // eslint-disable-line react/prefer
         />
 
 
-
         <Title>
-            <Title1>
-
-          </Title1>
           <Title2>
 
-            <img src={myImage2} height = '35%' width = '35%' />
+            <img src={myImage2} height="35%" width="35%" alt="Name Logo" />
             <h4>LOGIN</h4>
             <form onSubmit={(evt) => this.props.login(evt)}>
               <Title3>
