@@ -15,7 +15,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import makeSelectQuestionsPage from './selectors';
 import messages from './messages';
-import myImage from '../../background1.png';
+import myImage from '../../img/background1.png';
 
 
 const Title = styled.div`
