@@ -9,11 +9,34 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
-
+import styled from 'styled-components';
+import { RaisedButton } from 'material-ui';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import makeSelectQuestionsPage from './selectors';
 import messages from './messages';
+import myImage from '../../background1.png';
+
+
+const Title = styled.div`
+
+  margin:0px;
+  padding:0px;
+ background-image: url(${myImage});
+ background-size:cover;
+font-weight:300;
+ height:1000px;
+`;
+const Title2 = styled.div`
+  position: relative;
+
+z-index: 1;
+background: #FFFFFF;
+max-width: 800px;
+margin-top:  30;
+margin: 0 auto 100px;
+padding: 2%;
+`;
 
 export class QuestionsPage extends React.Component {
   state = {
@@ -24,70 +47,27 @@ export class QuestionsPage extends React.Component {
   render() {
     return (
       <div>
-        <Helmet
-          title="QuestionsPage"
-          meta={[
+        <Title>
+          <Helmet
+            title="QuestionsPage"
+            meta={[
             { name: 'description', content: 'Description of QuestionsPage' },
-          ]}
-        />
-        <h1>
-          <FormattedMessage {...messages.header1} />
-        </h1>
-        <h1>
-          <FormattedMessage {...messages.header1} />
-        </h1>
-        <SelectField value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} label="5 am - 12 pm" primaryText="Morning" />
-          <MenuItem value={2} label="12 pm - 5 pm" primaryText="Afternoon" />
-          <MenuItem value={3} label="5 pm - 9 pm" primaryText="Evening" />
-          <MenuItem value={4} label="9 pm - 5 am" primaryText="Night" />
-        </SelectField>
-        <h1>
-          <FormattedMessage {...messages.header2} />
-        </h1>
-        <SelectField value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} label="5 am - 12 pm" primaryText="Morning" />
-          <MenuItem value={2} label="12 pm - 5 pm" primaryText="Afternoon" />
-          <MenuItem value={3} label="5 pm - 9 pm" primaryText="Evening" />
-          <MenuItem value={4} label="9 pm - 5 am" primaryText="Night" />
-        </SelectField>
-        <h1>
-          <FormattedMessage {...messages.header3} />
-        </h1>
-        <SelectField value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} label="5 am - 12 pm" primaryText="Morning" />
-          <MenuItem value={2} label="12 pm - 5 pm" primaryText="Afternoon" />
-          <MenuItem value={3} label="5 pm - 9 pm" primaryText="Evening" />
-          <MenuItem value={4} label="9 pm - 5 am" primaryText="Night" />
-        </SelectField>
-        <h1>
-          <FormattedMessage {...messages.header4} />
-        </h1>
-        <SelectField value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} label="5 am - 12 pm" primaryText="Morning" />
-          <MenuItem value={2} label="12 pm - 5 pm" primaryText="Afternoon" />
-          <MenuItem value={3} label="5 pm - 9 pm" primaryText="Evening" />
-          <MenuItem value={4} label="9 pm - 5 am" primaryText="Night" />
-        </SelectField>
-        <h1>
-          <FormattedMessage {...messages.header5} />
-        </h1>
-        <SelectField value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} label="5 am - 12 pm" primaryText="Morning" />
-          <MenuItem value={2} label="12 pm - 5 pm" primaryText="Afternoon" />
-          <MenuItem value={3} label="5 pm - 9 pm" primaryText="Evening" />
-          <MenuItem value={4} label="9 pm - 5 am" primaryText="Night" />
-        </SelectField>
-        <h1>
-          <FormattedMessage {...messages.header6} />
-        </h1>
-        <SelectField value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} label="5 am - 12 pm" primaryText="Morning" />
-          <MenuItem value={2} label="12 pm - 5 pm" primaryText="Afternoon" />
-          <MenuItem value={3} label="5 pm - 9 pm" primaryText="Evening" />
-          <MenuItem value={4} label="9 pm - 5 am" primaryText="Night" />
-        </SelectField>
+            ]}
+          />
+          <Title2>
 
+            <h1>
+              <FormattedMessage {...messages.header1} />
+            </h1>
+            <SelectField value={this.state.value} autoWidth onChange={this.handleChange}>
+              <MenuItem value={1} label="5 am - 12 pm" primaryText="Morning" autoWidth />
+              <MenuItem value={2} label="12 pm - 5 pm" primaryText="This is to test if the autowidth works" autoWidth />
+              <MenuItem value={3} label="5 pm - 9 pm" primaryText="Evening" autoWidth />
+              <MenuItem value={4} label="9 pm - 5 am" primaryText="Night" autoWidth />
+            </SelectField>
+            <RaisedButton label="Subscribe" primary type="submit" />
+          </Title2>
+        </Title>
       </div>
     );
   }
