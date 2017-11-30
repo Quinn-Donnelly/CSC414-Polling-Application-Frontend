@@ -26,6 +26,7 @@ import { selectClasses } from '../CourseList/selectors';
 import { logOut } from '../Login/actions';
 import { selectLoggedIn } from '../Login/selectors';
 import myImage from '../../img/background1.png';
+import { postQuestion } from './actions';
 
 const style = {
   margin: 12,
@@ -64,6 +65,7 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
     this.state = {
       value: 'a',
       currentCourse: {},
+      numberOfAnswers: 3,
     };
   }
   state = {
@@ -117,7 +119,6 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
               <Title>
                 <h2 style={styles.headline}>Create and post your question</h2>
                 <List>
-                  <Subheader>Nested List Items</Subheader>
                   <ListItem key={89}>
                     <TextField
                       hintText="Make a question"
@@ -144,7 +145,8 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                           multiLine
                           fullWidth
                           style={style}
-                          id="Answers"
+                          id="1"
+                          className="answer"
                         />
                       </ListItem>,
                       <ListItem key={123}>
@@ -156,7 +158,8 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                           fullWidth
                           multiLine
                           style={style}
-                          id="Answers"
+                          id="2"
+                          className="answer"
                         />
                       </ListItem>,
                       <ListItem key={432}>
@@ -168,7 +171,8 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                           multiLine
                           fullWidth
                           style={style}
-                          id="Answers"
+                          id="3"
+                          className="answer"
                         />
                       </ListItem>,
                       <ListItem key={4}>
@@ -177,7 +181,7 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
                     ]}
                   />
                 </List>
-                <RaisedButton label="Post Questions" primary style={style} />
+                <RaisedButton label="Post Questions" primary style={style} onClick={() => this.props.post()} />
               </Title>
             </div>
           </Tab>
@@ -229,6 +233,7 @@ CoursePage.propTypes = {
   params: PropTypes.object.isRequired,
   exit: PropTypes.func.isRequired,
   logged: PropTypes.bool,
+  post: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -241,6 +246,14 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     exit: () => dispatch(logOut()),
+    post: () => {
+      const question = document.getElementById('question').value;
+      const answers = [];
+      for (let i = 1; i <= 3; i += 1) {
+        answers.push(document.getElementById(i.toString()).value);
+      }
+      dispatch(postQuestion(question, answers));
+    },
   };
 }
 
