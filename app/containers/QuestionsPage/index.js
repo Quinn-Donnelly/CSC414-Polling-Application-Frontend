@@ -60,10 +60,10 @@ export class QuestionsPage extends React.Component {
               <FormattedMessage {...messages.header1} />
             </h1>
             <SelectField value={this.state.value} autoWidth onChange={this.handleChange}>
-              <MenuItem value={1} label="5 am - 12 pm" primaryText="Morning" autoWidth />
-              <MenuItem value={2} label="12 pm - 5 pm" primaryText="This is to test if the autowidth works" autoWidth />
-              <MenuItem value={3} label="5 pm - 9 pm" primaryText="Evening" autoWidth />
-              <MenuItem value={4} label="9 pm - 5 am" primaryText="Night" autoWidth />
+              <MenuItem value={1} label="5 am - 12 pm" primaryText="Morning" />
+              <MenuItem value={2} label="12 pm - 5 pm" primaryText="This is to test if the autowidth works" />
+              <MenuItem value={3} label="5 pm - 9 pm" primaryText="Evening" />
+              <MenuItem value={4} label="9 pm - 5 am" primaryText="Night" />
             </SelectField>
             <RaisedButton label="Subscribe" primary type="submit" />
           </Title2>
