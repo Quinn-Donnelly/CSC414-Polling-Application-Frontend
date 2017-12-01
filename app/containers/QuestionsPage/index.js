@@ -15,7 +15,7 @@ import MenuItem from 'material-ui/MenuItem';
 import makeSelectQuestionsPage from './selectors';
 import messages from './messages';
 import myImage from '../../img/background1.png';
-import { getQuestions } from './actions';
+import { getQuestions, answerQuestion } from './actions';
 
 
 const Title = styled.div`
@@ -44,6 +44,11 @@ font-size: 10px;
 `;
 
 export class QuestionsPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+    this.props.answer.bind(this);
+  }
+
   state = {
     value: [],
   };
@@ -68,13 +73,13 @@ export class QuestionsPage extends React.Component { // eslint-disable-line reac
           </Title2>
             <Title3>
           <SelectField value={this.state.value[i]} fullWidth id={i.toString()} onChange={this.handleChange.bind(this, i)}>
-            <MenuItem value={0} label={this.props.QuestionsPage.questions[i].type.options[0]} name="joe" id={i.toString()} primaryText={this.props.QuestionsPage.questions[i].type.options[0]} />
-            <MenuItem value={1} label={this.props.QuestionsPage.questions[i].type.options[1]} name="blow" id={i.toString()} primaryText={this.props.QuestionsPage.questions[i].type.options[1]} />
-            <MenuItem value={2} label={this.props.QuestionsPage.questions[i].type.options[2]} name="hey" id={i.toString()} primaryText={this.props.QuestionsPage.questions[i].type.options[2]} />
+            <MenuItem value={0} label={this.props.QuestionsPage.questions[i].type.options[0]} name="joe" primaryText={this.props.QuestionsPage.questions[i].type.options[0]} />
+            <MenuItem value={1} label={this.props.QuestionsPage.questions[i].type.options[1]} name="blow" primaryText={this.props.QuestionsPage.questions[i].type.options[1]} />
+            <MenuItem value={2} label={this.props.QuestionsPage.questions[i].type.options[2]} name="hey" primaryText={this.props.QuestionsPage.questions[i].type.options[2]} />
 
           </SelectField>
             </Title3>
-          <RaisedButton label="submit" primary type="submit" />
+          <RaisedButton label="submit" primary type="submit" onClick={(evt) => { evt.preventDefault(); this.props.answer(i, this.state.value[i]); }} />
         </ListItem>
       </li>);
     }
@@ -112,6 +117,7 @@ QuestionsPage.propTypes = {
 //  dispatch: PropTypes.func.isRequired,
   fetchQuestions: PropTypes.func.isRequired,
   QuestionsPage: PropTypes.object.isRequired,
+  answer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -122,6 +128,9 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fetchQuestions: () => dispatch(getQuestions()),
+    answer: (id, selection) => {
+      dispatch(answerQuestion(id, selection));
+    },
   };
 }
 

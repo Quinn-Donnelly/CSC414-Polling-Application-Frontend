@@ -8,7 +8,10 @@ const selectQuestionsPageDomain = () => (state) => state.get('questionsPage');
 /**
  * Other specific selectors
  */
-
+const makeSelectQuestions = () => createSelector(
+  selectQuestionsPageDomain(),
+  (substate) => substate.get('questions')
+);
 
 /**
  * Default selector used by QuestionsPage
@@ -22,4 +25,5 @@ const makeSelectQuestionsPage = () => createSelector(
 export default makeSelectQuestionsPage;
 export {
   selectQuestionsPageDomain,
+  makeSelectQuestions,
 };
