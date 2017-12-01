@@ -38,7 +38,7 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/questionpage',
+      path: '/questionpage/:classroomId',
       name: 'questionsPage',
       getComponent(nextState, cb) {
         const importModules = Promise.all([

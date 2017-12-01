@@ -16,6 +16,7 @@ import makeSelectHome from './selectors';
 import CourseList from '../CourseList';
 import { getClasses } from '../CourseList/actions';
 import myImage from '../../img/background1.png';
+import { joinClass } from './actions';
 
 const style = {
   margin: 12,
@@ -104,11 +105,13 @@ export class Home extends React.Component { // eslint-disable-line react/prefer-
                   <h2 style={styles.headline}>Enter in code to join</h2>
                 </Title3>
                 <Title2>
-                  <TextField
-                    hintText="course code"
-
-                  />
-                  <RaisedButton label="Join" primary style={style} />
+                  <form onSubmit={(evt) => { evt.preventDefault(); this.props.join(); }}>
+                    <TextField
+                      hintText="course code"
+                      id="courseCode"
+                    />
+                    <RaisedButton label="Join" primary style={style} onClick={() => this.props.join()} />
+                  </form>
                 </Title2>
               </Title1>
 
@@ -122,6 +125,7 @@ export class Home extends React.Component { // eslint-disable-line react/prefer-
 
 Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  join: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -131,6 +135,10 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    join: () => {
+      const shortId = document.getElementById('courseCode').value;
+      dispatch(joinClass(shortId));
+    },
   };
 }
 
