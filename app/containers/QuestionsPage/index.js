@@ -33,6 +33,7 @@ font-size: 10px;
 margin-top:  10;
 margin: 0 auto 10px;
 padding: 2%;
+overflow-wrap: break-word;
 `;
 
 const Title3 = styled.div`
