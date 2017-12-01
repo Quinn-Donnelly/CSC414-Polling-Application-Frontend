@@ -11,13 +11,11 @@ import { createStructuredSelector } from 'reselect';
 import { TextField } from 'material-ui';
 import styled from 'styled-components';
 import { List, ListItem } from 'material-ui/List';
-import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import FlatButton from 'material-ui/FlatButton';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
-import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { blue500 } from 'material-ui/styles/colors';
@@ -25,6 +23,8 @@ import makeSelectCoursePage from './selectors';
 import { selectClasses } from '../CourseList/selectors';
 import { logOut } from '../Login/actions';
 import { selectLoggedIn } from '../Login/selectors';
+import { makeSelectQuestions } from '../QuestionsPage/selectors';
+import { getQuestions } from '../QuestionsPage/actions';
 import myImage from '../../img/background1.png';
 import { postQuestion } from './actions';
 
@@ -82,6 +82,10 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
     });
   }
 
+  componentDidMount() {
+    this.props.dispatch(getQuestions());
+  }
+
   handleToggle = () => {
     this.setState({
       open: !this.state.open,
@@ -101,6 +105,17 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
   };
 
   render() {
+    const questionList = [];
+    if (this.state.value === 'b') {
+      for (let i = 0; i < this.props.questions.length; i += 1) {
+        questionList.push(<ListItem
+          key={i.toString()}
+          primaryText={this.props.questions[i].text}
+          leftIcon={<ContentSend />}
+        />);
+      }
+    }
+
     return (
       <div>
         <AppBar
@@ -190,31 +205,7 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
               <Title>
 
                 <List>
-                  <Subheader>Nested List Items</Subheader>
-                  <ListItem key={100} primaryText="Unanswered" leftIcon={<ContentSend />} />
-                  <ListItem
-                    key={90}
-                    primaryText="Answered"
-                    leftIcon={<ContentInbox />}
-                    initiallyOpen
-                    primaryTogglesNestedList
-                    nestedItems={[
-                      <ListItem
-                        key={5}
-                        primaryText="Question 1"
-                      />,
-                      <ListItem
-                        key={6}
-                        primaryText="Question 2"
-                      />,
-                      <ListItem
-                        key={7}
-                        primaryText="Question 3"
-                        open={this.state.open}
-                        onNestedListToggle={this.handleNestedListToggle}
-                      />,
-                    ]}
-                  />
+                  {questionList}
                 </List>
               </Title>
             </div>
@@ -234,18 +225,21 @@ CoursePage.propTypes = {
   exit: PropTypes.func.isRequired,
   logged: PropTypes.bool,
   post: PropTypes.func.isRequired,
+  questions: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
   CoursePage: makeSelectCoursePage(),
   Classes: selectClasses(),
   logged: selectLoggedIn(),
+  questions: makeSelectQuestions(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     exit: () => dispatch(logOut()),
+    fetchQuestions: () => dispatch(getQuestions()),
     post: () => {
       const question = document.getElementById('question').value;
       const answers = [];

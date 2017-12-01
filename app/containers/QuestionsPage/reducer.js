@@ -9,6 +9,9 @@ import {
   DEFAULT_ACTION,
   GOT_QUESTIONS,
 } from './constants';
+import {
+    LOG_OUT,
+} from '../Login/constants';
 
 const initialState = fromJS({
   questions: [],
@@ -21,6 +24,9 @@ function questionsPageReducer(state = initialState, action) {
     case GOT_QUESTIONS:
       return state
         .set('questions', action.questions);
+    case LOG_OUT:
+      return state
+        .set('questions', []);
     default:
       return state;
   }
