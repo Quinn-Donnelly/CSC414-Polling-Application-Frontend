@@ -119,7 +119,7 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
     return (
       <div>
         <AppBar
-          title={this.state.currentCourse.name}
+          title={`${this.state.currentCourse.name} Access Code: ${this.state.currentCourse.shortid}`}
           iconElementLeft={<IconButton onClick={() => this.props.dispatch(goBack())}><ArrowBack /></IconButton>}
           iconElementRight={this.props.logged ? <FlatButton label="Log Out" onClick={() => this.props.exit()} /> : <FlatButton label="Login" />}
         />
@@ -203,7 +203,6 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
           <Tab label="Questions Status" value="b">
             <div>
               <Title>
-
                 <List>
                   {questionList}
                 </List>

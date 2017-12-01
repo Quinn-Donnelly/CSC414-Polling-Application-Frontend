@@ -32,6 +32,7 @@ export function* postQuestion(action) {
   try {
     // Call our request helper (see 'utils/request')
     yield call(request, requestURL, options);
+    window.alert('Question Posted');
   } catch (err) {
     console.error(err);
   }
