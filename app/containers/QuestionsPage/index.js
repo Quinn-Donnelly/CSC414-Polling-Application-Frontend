@@ -20,22 +20,26 @@ import { getQuestions } from './actions';
 
 const Title = styled.div`
 
-  margin:0px;
-  padding:0px;
+  margin-top: -15px;
+
  background-image: url(${myImage});
  background-size:cover;
-font-weight:300;
- height:1000px;
+font-size: 10
+ height:1200px;
 `;
 const Title2 = styled.div`
-  position: relative;
-
-z-index: 1;
 background: #FFFFFF;
-max-width: 800px;
-margin-top:  30;
-margin: 0 auto 100px;
+font-size: 10px;
+margin-top:  10;
+margin: 0 auto 10px;
 padding: 2%;
+`;
+
+const Title3 = styled.div`
+background: #FFFFFF;
+font-size: 10px;
+
+
 `;
 
 export class QuestionsPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -60,14 +64,17 @@ export class QuestionsPage extends React.Component { // eslint-disable-line reac
       listOfQuestions.push(<li key={i.toString()}>
         <ListItem><Title2>
           <h1>{this.props.QuestionsPage.questions[i].text}</h1>
-          <SelectField value={this.state.value[i]} autoWidth id={i.toString()} onChange={this.handleChange.bind(this, i)}>
+          </Title2>
+            <Title3>
+          <SelectField value={this.state.value[i]} fullWidth id={i.toString()} onChange={this.handleChange.bind(this, i)}>
             <MenuItem value={0} label={this.props.QuestionsPage.questions[i].type.options[0]} name="joe" id={i.toString()} primaryText={this.props.QuestionsPage.questions[i].type.options[0]} />
             <MenuItem value={1} label={this.props.QuestionsPage.questions[i].type.options[1]} name="blow" id={i.toString()} primaryText={this.props.QuestionsPage.questions[i].type.options[1]} />
             <MenuItem value={2} label={this.props.QuestionsPage.questions[i].type.options[2]} name="hey" id={i.toString()} primaryText={this.props.QuestionsPage.questions[i].type.options[2]} />
 
           </SelectField>
+            </Title3>
           <RaisedButton label="submit" primary type="submit" />
-        </Title2></ListItem>
+        </ListItem>
       </li>);
     }
 /* eslint-enable */
