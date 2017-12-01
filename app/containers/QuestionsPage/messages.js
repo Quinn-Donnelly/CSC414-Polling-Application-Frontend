@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header1: {
     id: 'app.containers.QuestionsPage.header1',
-    defaultMessage: 'This is Question1 ',
+    defaultMessage: 'No questions posted at this time.',
   },
   header2: {
     id: 'app.containers.QuestionsPage.header2',

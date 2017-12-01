@@ -3,19 +3,19 @@
  * QuestionsPage
  *
  */
-
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
-import { RaisedButton } from 'material-ui';
+import { RaisedButton, ListItem, Paper } from 'material-ui';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import makeSelectQuestionsPage from './selectors';
 import messages from './messages';
 import myImage from '../../img/background1.png';
+import { getQuestions } from './actions';
 
 
 const Title = styled.div`
@@ -38,13 +38,50 @@ margin: 0 auto 100px;
 padding: 2%;
 `;
 
-export class QuestionsPage extends React.Component {
+export class QuestionsPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = {
-    value: null,
+    value: [],
   };
 
-  handleChange = (event, index, value) => this.setState({ value });// eslint-disable-line react/prefer-stateless-function
+  componentWillMount() {
+    this.props.fetchQuestions();
+  }
+
+  handleChange = (inputId, event, index, value) => {
+    const arr = this.state.value;
+    arr[inputId] = value;
+    this.setState({ value: arr });
+  }
+
   render() {
+    let listOfQuestions = [];
+/* eslint-disable */
+    for (let i = 0; i < this.props.QuestionsPage.questions.length; i += 1) {
+      listOfQuestions.push(<li key={i.toString()}>
+        <ListItem><Title2>
+          <h1>{this.props.QuestionsPage.questions[i].text}</h1>
+          <SelectField value={this.state.value[i]} autoWidth id={i.toString()} onChange={this.handleChange.bind(this, i)}>
+            <MenuItem value={0} label={this.props.QuestionsPage.questions[i].type.options[0]} name="joe" id={i.toString()} primaryText={this.props.QuestionsPage.questions[i].type.options[0]} />
+            <MenuItem value={1} label={this.props.QuestionsPage.questions[i].type.options[1]} name="blow" id={i.toString()} primaryText={this.props.QuestionsPage.questions[i].type.options[1]} />
+            <MenuItem value={2} label={this.props.QuestionsPage.questions[i].type.options[2]} name="hey" id={i.toString()} primaryText={this.props.QuestionsPage.questions[i].type.options[2]} />
+
+          </SelectField>
+          <RaisedButton label="submit" primary type="submit" />
+        </Title2></ListItem>
+      </li>);
+    }
+/* eslint-enable */
+
+    if (listOfQuestions.length === 0) {
+      listOfQuestions = (<div style={{ width: '50%', margin: '0 auto' }}>
+        <Paper elevation={24}>
+          <h1>
+            <FormattedMessage {...messages.header1} />
+          </h1>
+        </Paper>
+      </div>);
+    }
+
     return (
       <div>
         <Title>
@@ -54,19 +91,9 @@ export class QuestionsPage extends React.Component {
             { name: 'description', content: 'Description of QuestionsPage' },
             ]}
           />
-          <Title2>
-
-            <h1>
-              <FormattedMessage {...messages.header1} />
-            </h1>
-            <SelectField value={this.state.value} autoWidth onChange={this.handleChange}>
-              <MenuItem value={1} label="5 am - 12 pm" primaryText="Morning" />
-              <MenuItem value={2} label="12 pm - 5 pm" primaryText="This is to test if the autowidth works" />
-              <MenuItem value={3} label="5 pm - 9 pm" primaryText="Evening" />
-              <MenuItem value={4} label="9 pm - 5 am" primaryText="Night" />
-            </SelectField>
-            <RaisedButton label="Subscribe" primary type="submit" />
-          </Title2>
+          <ul style={{ listStyleType: 'none' }}>
+            {listOfQuestions}
+          </ul>
         </Title>
       </div>
     );
@@ -74,7 +101,9 @@ export class QuestionsPage extends React.Component {
 }
 
 QuestionsPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+//  dispatch: PropTypes.func.isRequired,
+  fetchQuestions: PropTypes.func.isRequired,
+  QuestionsPage: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -84,6 +113,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchQuestions: () => dispatch(getQuestions()),
   };
 }
 
