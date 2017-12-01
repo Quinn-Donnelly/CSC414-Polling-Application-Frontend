@@ -26,7 +26,7 @@ import { selectLoggedIn } from '../Login/selectors';
 import { makeSelectQuestions } from '../QuestionsPage/selectors';
 import { getQuestions } from '../QuestionsPage/actions';
 import myImage from '../../img/background1.png';
-import { postQuestion } from './actions';
+import { postQuestion, getResponses } from './actions';
 
 const style = {
   margin: 12,
@@ -86,6 +86,10 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
     this.props.dispatch(getQuestions());
   }
 
+  getResponses(questionId) {
+    this.props.dispatch(getResponses(questionId));
+  }
+
   handleToggle = () => {
     this.setState({
       open: !this.state.open,
@@ -108,10 +112,25 @@ export class CoursePage extends React.Component { // eslint-disable-line react/p
     const questionList = [];
     if (this.state.value === 'b') {
       for (let i = 0; i < this.props.questions.length; i += 1) {
+        const options = [];
+        if (this.props.CoursePage.responses[this.props.questions[i].id] !== undefined) {
+          const responses = this.props.CoursePage.responses[this.props.questions[i].id];
+
+          for (let j = 0; j < responses.length; j += 1) {
+            options.push(
+              <ListItem key={j.toString()}>
+                {`${responses[j]} : ${this.props.questions[i].type.options[j]}`}
+              </ListItem>
+            );
+          }
+        }
+
         questionList.push(<ListItem
           key={i.toString()}
           primaryText={this.props.questions[i].text}
+          onClick={() => this.getResponses(this.props.questions[i].id)}
           leftIcon={<ContentSend />}
+          nestedItems={options}
         />);
       }
     }
@@ -225,6 +244,7 @@ CoursePage.propTypes = {
   logged: PropTypes.bool,
   post: PropTypes.func.isRequired,
   questions: PropTypes.any,
+  CoursePage: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({

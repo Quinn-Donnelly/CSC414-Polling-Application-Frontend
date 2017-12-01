@@ -7,11 +7,28 @@
 import {
   DEFAULT_ACTION,
   POST_QUESTION,
+  GET_RESPONSES,
+  GOT_RESPONSES,
 } from './constants';
 
 export function defaultAction() {
   return {
     type: DEFAULT_ACTION,
+  };
+}
+
+export function getResponses(questionId) {
+  return {
+    type: GET_RESPONSES,
+    questionId,
+  };
+}
+
+export function gotResponses(questionId, responses) {
+  return {
+    type: GOT_RESPONSES,
+    questionId,
+    responses,
   };
 }
 

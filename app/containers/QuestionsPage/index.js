@@ -7,14 +7,21 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
+import { goBack } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
 import { RaisedButton, ListItem, Paper } from 'material-ui';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
 import SelectField from 'material-ui/SelectField';
+import FlatButton from 'material-ui/FlatButton';
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import MenuItem from 'material-ui/MenuItem';
 import makeSelectQuestionsPage from './selectors';
 import messages from './messages';
 import myImage from '../../img/background1.png';
+import { logOut } from '../Login/actions';
+import { selectLoggedIn } from '../Login/selectors';
 import { getQuestions, answerQuestion } from './actions';
 
 
@@ -104,6 +111,11 @@ export class QuestionsPage extends React.Component { // eslint-disable-line reac
             { name: 'description', content: 'Description of QuestionsPage' },
             ]}
           />
+          <AppBar
+            iconElementLeft={<IconButton onClick={() => this.props.dispatch(goBack())}><ArrowBack /></IconButton>}
+            iconElementRight={this.props.logged ? <FlatButton label="Log Out" onClick={() => this.props.exit()} /> : <FlatButton label="Login" />}
+          />
+
           <ul style={{ listStyleType: 'none' }}>
             {listOfQuestions}
           </ul>
@@ -114,19 +126,23 @@ export class QuestionsPage extends React.Component { // eslint-disable-line reac
 }
 
 QuestionsPage.propTypes = {
-//  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
   fetchQuestions: PropTypes.func.isRequired,
   QuestionsPage: PropTypes.object.isRequired,
   answer: PropTypes.func.isRequired,
+  logged: PropTypes.bool,
+  exit: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   QuestionsPage: makeSelectQuestionsPage(),
+  logged: selectLoggedIn(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    exit: () => dispatch(logOut()),
     fetchQuestions: () => dispatch(getQuestions()),
     answer: (id, selection) => {
       dispatch(answerQuestion(id, selection));
